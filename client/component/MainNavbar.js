@@ -1,8 +1,13 @@
 import { Grid, IconButton, Typography } from '@mui/material';
 import { useEffect, useState } from 'react'
 import Link from 'next/link';
-import { useCookies } from 'react-cookie'
-import SettingsIcon from '@mui/icons-material/Settings'
+import { useCookies } from 'react-cookie';
+import SettingsIcon from '@mui/icons-material/Settings';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
+import '../styles/mainNavbar.module.css'
 
 export default function MainNavbar () {
     const [cookie, setCookie, removeCookie] = useCookies(['access_token']);
@@ -13,8 +18,13 @@ export default function MainNavbar () {
         removeCookie('access_token');
     };
 
+    // const getRoleFromLocalStorage = () => {
+    //     const 
+    // }
+
     useEffect(() => {
-        const setRole = localStorage.getItem('role');
+        const getRole = localStorage.getItem('role');
+        setRole(getRole)
     }, [])
 
     return (
@@ -59,6 +69,8 @@ export default function MainNavbar () {
                     spacing={{ md: 2 }}
                     mr={3}
                 >
+
+                    {/* Settings */}
                     <Grid item>
                         {role === 'superAdmin' && (
                             <IconButton
@@ -77,17 +89,74 @@ export default function MainNavbar () {
                             </IconButton>
                         )}
                     </Grid>
-
+                    
+                    {/* Log In */}
                     <Grid item>
                         {role === null && (
                             <Link href={'/login'}>
                                 <Typography>Log In</Typography>
                             </Link>
                         )}
+
+                    {(role === 'user' || role === 'admin' || role === 'superAdmin') && (
+                        <IconButton
+                            aria-label='Account'
+                            onClick={() => window.location.assign('edit/profile')}
+                        >
+                            <PersonIcon />
+                        </IconButton>
+                    )}
+                    </Grid>
+
+                    {/* Wishlist */}
+                    <Grid item>
+                        {(role === 'user' || role === 'admin' || role === 'superAdmin') && (
+                            <IconButton
+                                aria-label='Account'
+                                onClick={() => window.location.assign('/#')}
+                            >
+                                <FavoriteIcon />
+                            </IconButton>
+                        )}
+                    </Grid>
+
+                    {/* Log Out */}
+                    <Grid item>
+                        {(role === 'user' || role === 'admin' || role === 'superAdmin') && (
+                            <IconButton
+                                aria-label='Account'
+                                onClick={() => {
+                                    removeAccessToken();
+                                    window.location.assign('/login');
+                                }}
+                            >
+                                <LogoutIcon />
+                            </IconButton>
+                        )}
                     </Grid>
                 </Grid>
             </Grid>
 
+            <Grid 
+                item
+                sx={{ display: { xs: 'flex', sm: 'none' } }}
+                mr={3}
+                justifyContent={'flex-end'}
+            >
+                <>
+                    <input 
+                        className={'hamburgerButton'}
+                        type='checkbox'
+                        onClick={() => console.log(1)}
+                        id='nav-menu'
+                    />
+                    <label htmlFor='nav-menu' id='nav-icon'>
+                        <span />
+                        <span />
+                        <span />
+                    </label>
+                </>
+            </Grid>
         </Grid>
     );
 };
