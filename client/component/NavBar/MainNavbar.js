@@ -7,7 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-import '../../styles/mainNavbar.module.css'
+import styles from '../../styles/HomePage.module.css';
 
 export default function MainNavbar () {
     const [cookie, setCookie, removeCookie] = useCookies(['access_token']);
@@ -148,7 +148,7 @@ export default function MainNavbar () {
             >
                 <>
                     <input 
-                        className={'hamburgerButton'}
+                        className={styles.hamburgerButton}
                         type='checkbox'
                         onClick={() => console.log(1)}
                         id='nav-menu'
