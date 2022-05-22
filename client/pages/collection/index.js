@@ -1,5 +1,5 @@
 import { Grid, Typography } from "@mui/material";
-import MainNavbar from "../../component/MainNavbar";
+import MainNavbar from "../../component/NavBar/MainNavbar";
 
 export default function Collection() {
   return (

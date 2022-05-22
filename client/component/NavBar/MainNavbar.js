@@ -38,7 +38,9 @@ export default function MainNavbar () {
         >
             {/* Start Bar */}
             <Grid item sm ml={2}>
-                <Typography>Showcarpedia</Typography>
+                <Link href='/'>
+                <Typography variant={'h5'} className={styles.Link}>Showcarpedia</Typography>
+                </Link>
             </Grid>
 
             {/* Mid Bar */}
@@ -51,13 +53,25 @@ export default function MainNavbar () {
                     >
                     <Grid item>
                         <Link href={'/'}>
-                            Home
+                            <Typography className={styles.Link} 
+                                sx={{
+                                    fontSize: '18px'
+                                }}
+                            >
+                                Home
+                            </Typography>
                         </Link>
                     </Grid>
 
                     <Grid item>
                         <Link href={'/collection'}>
-                            Collection
+                            <Typography className={styles.Link} 
+                                sx={{
+                                    fontSize: '18px'
+                                }}
+                            >
+                                Collection
+                            </Typography>
                         </Link>
                     </Grid>
                 </Grid>
@@ -97,7 +111,11 @@ export default function MainNavbar () {
                     <Grid item>
                         {role === null && (
                             <Link href={'/login'}>
-                                <Typography>Log In</Typography>
+                                <Typography className={styles.Link}
+                                    sx={{
+                                        fontSize: '18px'
+                                    }}
+                                >Log In</Typography>
                             </Link>
                         )}
 

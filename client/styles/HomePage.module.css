@@ -59,6 +59,11 @@
   height: 600px;
 }
 
+.Link {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
 
 
 
