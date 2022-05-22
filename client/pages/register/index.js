@@ -1,21 +1,27 @@
 import { Button, Grid, Typography, TextField } from "@mui/material";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import  Router  from "next/router";
+import { useDispatch } from "react-redux";
 import SecondNavbar from "../../component/NavBar/SecondNavbar";
+import { registerAccount } from "../../redux/slices/accountSlice";
 
 import styles from '../../styles/Login+Register.module.css';
 
 export default function Register () {
-    // const navigate = useNavigate();
-
+    const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
             username: '',
             email: '',
             password: ''
         },
-        onSubmit: values => {
-            console.log(values, 'user is registered')
+        onSubmit: async values => {
+           const register = await dispatch(registerAccount(values))
+           if(register.error) {
+            console.log(register.payload?.message)
+           } else{
+            Router.push("/login")
+           }
         }
     })
 
@@ -46,7 +52,6 @@ export default function Register () {
                                 label='Username'
                                 required
                                 focused
-
                                 sx={{
                                     width: 345
                                 }}
@@ -88,7 +93,7 @@ export default function Register () {
                             <TextField 
                                 id='password'
                                 name='password'
-                                label='Password'
+                                label='password'
                                 type='password'
                                 required
                                 focused
