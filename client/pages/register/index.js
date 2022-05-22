@@ -1,12 +1,15 @@
 import { Button, Grid, Typography, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
+import { useRouter } from 'next/router';
+
 import SecondNavbar from "../../component/NavBar/SecondNavbar";
 
 import styles from '../../styles/Login+Register.module.css';
 
 export default function Register () {
     // const navigate = useNavigate();
+    const router = useRouter();
 
     const formik = useFormik({
         initialValues: {
@@ -15,7 +18,10 @@ export default function Register () {
             password: ''
         },
         onSubmit: values => {
-            console.log(values, 'user is registered')
+            console.log(values, 'user is registered');
+            
+            // router.push as navigate substitute
+            router.push('/login')
         }
     })
 
