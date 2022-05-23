@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchCollectionData = createAsyncThunk("collections/fetchData", async (_,thunkAPI) => {
   try {
-    const response = await fetch("http://localhost:4000/v1/cars", {
+    const response = await fetch("http://localhost:3001/v1/cars", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -19,7 +19,7 @@ export const fetchCollectionData = createAsyncThunk("collections/fetchData", asy
 export const fetchCollectionDataById = createAsyncThunk("collections/fetchDataById", async (id,thunkAPI) => {
     console.log(id)
     try {
-      const response = await fetch(`http://localhost:4000/v1/cars/details/${id}`, {
+      const response = await fetch(`http://localhost:3001/v1/cars/details/${id}`, {
         method: "GET",
         headers: {
           Accept: "application/json",

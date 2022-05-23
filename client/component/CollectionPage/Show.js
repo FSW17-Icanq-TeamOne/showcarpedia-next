@@ -43,7 +43,7 @@ import {
   },[])
   
     const handleWishlist = async () => {
-      const response = await fetch('http://localhost:4000/v1/wishlist', {
+      const response = await fetch('http://localhost:3001/v1/wishlist', {
         method: 'post',
         headers: { 
             Accept: 'application/json',
@@ -55,7 +55,7 @@ import {
     const message = await response.json()
     switch (message) {
       case "product has been added":
-        await fetch("http://localhost:4000/v1/wishlist/delete",{
+        await fetch("http://localhost:3001/v1/wishlist/delete",{
           method:"delete",
           headers: { 
             Accept: 'application/json',

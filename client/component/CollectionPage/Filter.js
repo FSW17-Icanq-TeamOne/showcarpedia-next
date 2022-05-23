@@ -15,7 +15,7 @@ export default function Filter() {
   const grades = ["1", "2", "3", "4", "5"];
 
   const fetchData = async () => {
-    const response = await fetch("http://localhost:4000/v1/cars/make/", {
+    const response = await fetch("http://localhost:3001/v1/cars/make/", {
       method: "GET",
       headers: {
         Accept: "application/json",
