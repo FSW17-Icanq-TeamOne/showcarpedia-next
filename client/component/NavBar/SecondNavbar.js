@@ -1,6 +1,8 @@
 import { Grid, Typography } from "@mui/material";
 import Link from 'next/link';
 
+import styles from '../../styles/Login+Register.module.css';
+
 export default function SecondNavbar () {
     return (
         <nav>
@@ -24,11 +26,11 @@ export default function SecondNavbar () {
                     marginRight={'165px'}
                 >
                     <Link href={'/'}>
-                        <Typography>Home</Typography>
+                        <Typography className={styles.Link}>Home</Typography>
                     </Link>
 
                     <Link href={'/collection'}>
-                        <Typography>Collection</Typography>
+                        <Typography className={styles.Link}>Collection</Typography>
                     </Link>
                 </Grid>
             </Grid>
