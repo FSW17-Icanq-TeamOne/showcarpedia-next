@@ -33,6 +33,15 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
+      {
+        username: "caca",
+        email: "caca@showcarpedia.com",
+        password: hashPassword("caca"),
+        role: "user",
+        delete: false,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
     ], {})
   },
 

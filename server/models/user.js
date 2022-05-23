@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.Profile, {foreignKey:"UserId"})
       //User.hasMany(models.Product)
       User.hasMany(models.Wishlist, { foreignKey: "UserId"})
+      User.hasOne(models.RoomLists, {foreignKey:"UserId"}),
+      User.hasMany(models.Chat, { foreignKey: "UserId"})
     }
   }
   User.init({

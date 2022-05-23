@@ -1,4 +1,4 @@
-const { User, Profile } = require("../models")
+const { User, Profile, RoomLists } = require("../models")
 const { hashPassword } = require("../helpers/passwordHandler")
 
 class RegisterController {
@@ -25,12 +25,23 @@ class RegisterController {
                const profile = await Profile.create(payloadProfile)
  
                if (profile) {
-                 return res.status(201).json({
-                   username: user.username,
-                   email: user.email,
-                   role: user.role,
-                   profile
-                 })
+                
+                const payloadRoomLists = {
+                  UserId: user.id,
+                  Room: user.username + "_admin"
+                 }
+
+                 const roomList = await RoomLists.create(payloadRoomLists)
+                 
+                 if (roomList){
+                    return res.status(201).json({
+                      username: user.username,
+                      email: user.email,
+                      role: user.role,
+                      profile,
+                      roomList
+                    })
+                 }
                }
  
              } else if (!user) {

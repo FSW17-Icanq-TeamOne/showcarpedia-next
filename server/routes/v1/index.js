@@ -8,7 +8,7 @@ const adminRouter = require("./adminRouter")
 //const productRouter = require("./productRouter")
 const carsRouter = require("./carsRouter")
 const wishlistRouter = require("./wishlistRouter")
-
+const chatRouter = require("./chatRouter")
 
 v1.get("/", (req,res) => res.send("ini dari v1"))
 
@@ -21,6 +21,7 @@ v1.use("/admin", adminRouter)
 //v1.use("/product", productRouter)
 v1.use("/cars", carsRouter)
 v1.use("/wishlist", wishlistRouter)
+v1.use("/chat", chatRouter)
 
 
 module.exports= v1
