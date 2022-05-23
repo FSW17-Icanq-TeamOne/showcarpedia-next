@@ -4,8 +4,8 @@ import {
   Divider
 } from "@mui/material";
 import { useSelector } from "react-redux";
-import Show from "../../component/Collection/Show";
-import Filter from "../../component/Collection/Filter";
+import Show from "../../component/CollectionPage/Show";
+import Filter from "../../component/CollectionPage/Filter";
 import MainNavbar from "../../component/NavBar/MainNavbar";
 import {useDispatch} from "react-redux"
 import { fetchCollectionData } from "../../redux/slices/collectionsSlice";

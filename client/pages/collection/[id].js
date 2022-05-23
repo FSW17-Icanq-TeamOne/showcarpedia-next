@@ -1,6 +1,6 @@
 import MainNavbar from "../../component/NavBar/MainNavbar";
 import { Grid, } from "@mui/material";
-import Details from "../../component/Collection/CardDetail";
+import Details from "../../component/CollectionPage/CardDetail";
 import { useRouter } from "next/router";
 import {useDispatch, useSelector} from "react-redux"
 import { useEffect } from "react";
