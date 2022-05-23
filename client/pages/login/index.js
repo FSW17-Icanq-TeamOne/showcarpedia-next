@@ -1,13 +1,10 @@
 import { Button, Grid, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
-import { useRouter } from 'next/router';
 import SecondNavbar from '../../component/NavBar/SecondNavbar'
 
 import styles from '../../styles/Login+Register.module.css';
 
 export default function Login () {
-    const router = useRouter();
-
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -15,9 +12,6 @@ export default function Login () {
         },
         onSubmit: values => {
             console.log(values, 'user is logged in')
-
-            // router.push as navigate substitute
-            router.push('/')
         }
     })
 
@@ -148,7 +142,7 @@ export default function Login () {
                                     borderColor: 'black'
                                 }}
 
-                                href={'/register'}
+                                href={'/login'}
                             >
                                 Create Account
                             </Button>
