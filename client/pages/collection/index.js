@@ -1,7 +1,8 @@
 import {
   Container,
   Grid,
-  Divider
+  Divider,
+  Typography
 } from "@mui/material";
 import { useSelector } from "react-redux";
 import Show from "../../component/CollectionPage/Show";
@@ -12,7 +13,8 @@ import { fetchCollectionData } from "../../redux/slices/collectionsSlice";
 import { useEffect } from "react";
 
 export default function Collection() {
- const data = useSelector(state => state.collections)
+
+const data = useSelector(state => state.collections)
 const dispatch = useDispatch()
 //  const fetchWishlistData = async () => {
 //   const response = await fetch("http://localhost:4000/v1/wishlist", {
@@ -39,11 +41,10 @@ useEffect(()=>{
 // useEffect(()=>{
 //   fetchWishlistData()
 // },[])
-
   return (
     <>
       <MainNavbar />
-
+    
       {/* Filter */}
       <Filter />
 
@@ -72,4 +73,3 @@ useEffect(()=>{
     </>
   );
 }
-
