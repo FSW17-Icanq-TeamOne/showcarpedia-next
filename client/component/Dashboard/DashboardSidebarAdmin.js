@@ -11,7 +11,7 @@ function DashboardSidebarAdmin () {
     }, [])
 
     return (
-        <Box style={{ height: 'calc(100vh-64px' }}>
+        <Box style={{ height: 'calc(100vh-64px)' }}>
             <List>
                 <Link href='/' style={{ textDecoration: 'none', color: 'black'}}>
                     <ListItem disablePadding>
@@ -53,7 +53,7 @@ function DashboardSidebarAdmin () {
                                 </ListItemIcon>
                                 <ListItemText
                                     primary='Admin Manager'
-                                    sx={{ display: { xs: 'none', sm: 'unset'}}}
+                                    sx={{ display: { xs: 'none', sm: 'unset' }}}
                                 />
                             </ListItemButton>
                         </ListItem>
@@ -101,7 +101,7 @@ function DashboardSidebarAdmin () {
                             </ListItemIcon>
                             <ListItemText
                                 primary='Web Settings'
-                                sx={{ display: { xs: 'none', sm: 'unset'}}}
+                                sx={{ display: { xs: 'none', sm: 'unset' }}}
                             />
                         </ListItemButton>
                     </ListItem>
