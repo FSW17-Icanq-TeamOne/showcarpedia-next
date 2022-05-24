@@ -4,34 +4,24 @@ import { FormControl } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import { Grid, Typography, Container, Button } from "@mui/material";
 import { useFormik } from "formik";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import {  useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCarMakeData } from "../../redux/slices/carMakeSlice";
+import {useRouter} from "next/router"
 
 export default function Filter() {
-  const [brands, setBrands] = useState([]);
-  const [category, setCategory] = useState([]);
-  const [year, setYear] = useState([]);
-  const mileages = ["1000", "5000", "10000", "20000", "50000"];
-  const grades = ["1", "2", "3", "4", "5"];
+ const data = useSelector(state => state.carMake)
+const dispatch = useDispatch()
+const router = useRouter()
 
   const fetchData = async () => {
-    const response = await fetch("http://localhost:3001/v1/cars/make/", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    });
-    const data = await response.json();
-    setYear(data.year.map((e) => e.year));
-    setBrands(data.brand.sort());
-    setCategory(data.category.sort());
+     await dispatch(fetchCarMakeData())
   };
 
   useEffect(() => {
+    if(!router.isReady) return
     fetchData();
-  }, []);
+  }, [router.isReady]);
 
 
 
@@ -48,7 +38,7 @@ export default function Filter() {
       const year = Number(values.minYear);
       const grade = Number(values.grades);
       const mileages = Number(values.maxMileages);
-
+      router.push(`/search?mileages=${mileages}&minYear=${year}&grade=${grade}&brand=${values.brand}&category=${values.category}`)
      
     },
   });
@@ -73,7 +63,7 @@ export default function Filter() {
                 onBlur={formik.handleBlur}
                 onChange={(e) => formik.setFieldValue("brand", e.target.value)}
               >
-                {brands.map((e, i) => (
+                {data.brands?.map((e, i) => (
                   <MenuItem value={e} key={i}>
                     {e}
                   </MenuItem>
@@ -94,7 +84,7 @@ export default function Filter() {
                   formik.setFieldValue("category", e.target.value)
                 }
               >
-                {category.map((e, i) => (
+                {data?.categories.map((e, i) => (
                   <MenuItem value={e} key={i}>
                     {e}
                   </MenuItem>
@@ -115,7 +105,7 @@ export default function Filter() {
                   formik.setFieldValue("minYear", e.target.value)
                 }
               >
-                {year.map((e, i) => (
+                {data?.year.map((e, i) => (
                   <MenuItem value={e} key={i}>
                     {e}
                   </MenuItem>
@@ -136,7 +126,7 @@ export default function Filter() {
                   formik.setFieldValue("maxMileages", e.target.value)
                 }
               >
-                {mileages.map((e, i) => (
+                {data?.mileages.map((e, i) => (
                   <MenuItem value={e} key={i}>
                     {e}
                   </MenuItem>
@@ -155,7 +145,7 @@ export default function Filter() {
                 onBlur={formik.handleBlur}
                 onChange={(e) => formik.setFieldValue("grades", e.target.value)}
               >
-                {grades.map((e, i) => (
+                {data?.grades.map((e, i) => (
                   <MenuItem value={e} key={i}>
                     {e}
                   </MenuItem>
@@ -168,9 +158,9 @@ export default function Filter() {
         <Grid display={"flex"} marginTop={"15px"} justifyContent="center">
           <Grid>
             <Button
-            onClick={() => navigate("/collection")}
+            onClick={() => router.push("/collection")}
               sx={{
-                borderRadius: 30,
+                borderRadius: 15,
                 borderColor: "#2871CC",
                 "&:hover": {
                   transition: ".5s",
@@ -187,7 +177,7 @@ export default function Filter() {
             <Button
               type="submit"
               sx={{
-                borderRadius: 30,
+                borderRadius: 15,
                 borderColor: "#2871CC",
                 "&:hover": {
                   transition: ".5s",

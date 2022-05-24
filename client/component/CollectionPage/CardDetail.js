@@ -28,13 +28,13 @@ import {
             >
               <CardContent>
                 <Typography variant="h4" fontStyle="bold">
-                  {data.title}
+                  {data?.title}
                 </Typography>
                 <Typography variant="h5" textTransform="capitalize">
                   year:
                   <Typography variant="span" color="red">
                     {" "}
-                    {data.year}
+                    {data?.year}
                   </Typography>
                 </Typography>
               </CardContent>
@@ -51,7 +51,7 @@ import {
                 <Grid container justifyContent="space-evenly" >
                   <Grid item>
                     <Speed fontSize="large" />
-                    <Typography>{data.kiloMeter} km</Typography>
+                    <Typography>{data?.kiloMeter} km</Typography>
                   </Grid>
                 
                  
@@ -64,7 +64,7 @@ import {
                     >
                       grade
                     </Typography>
-                    <Rating value={Number(data.grade)} readOnly />
+                    <Rating value={Number(data?.grade)} readOnly />
                   </Grid>
                 </Grid>
                 <Divider />
@@ -72,7 +72,7 @@ import {
                   <Typography variant="h5" textAlign={"center"}>
                     brand
                   </Typography>
-                  <Typography textAlign={"center"}>{data.brand}</Typography>
+                  <Typography textAlign={"center"}>{data?.brand}</Typography>
                 </Stack>
               </CardContent>
             </Card>
@@ -95,7 +95,7 @@ import {
                 >
                   about car
                 </Typography>
-                <Typography variant="body1">{data.description}</Typography>
+                <Typography variant="body1">{data?.description}</Typography>
               </CardContent>
             </Card>
           </Grid>

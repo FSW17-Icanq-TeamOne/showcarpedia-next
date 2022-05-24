@@ -5,6 +5,8 @@ import { getRoomSlice } from "./slices/chatsSlice/getRoomSlice"
 import { getUnameSlice } from "./slices/chatsSlice/getUnameSlice"
 import { getChatsSlice } from "./slices/chatsSlice/getChats"
 import { getRoomListsSlice } from "./slices/chatsSlice/getRoomLists"
+import { carMakeSlice } from "./slices/carMakeSlice"
+import { wishlistSlice } from "./slices/wishlistSlice"
 
 export const store = configureStore({
     reducer:{
@@ -13,6 +15,8 @@ export const store = configureStore({
         getRoom: getRoomSlice.reducer,
         getUname: getUnameSlice.reducer,
         getChats: getChatsSlice.reducer,
-        getRoomLists: getRoomListsSlice.reducer
+        getRoomLists: getRoomListsSlice.reducer,
+        carMake:carMakeSlice.reducer,
+        wishlist: wishlistSlice.reducer
     }
 })

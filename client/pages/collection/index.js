@@ -11,36 +11,30 @@ import MainNavbar from "../../component/NavBar/MainNavbar";
 import {useDispatch} from "react-redux"
 import { fetchCollectionData } from "../../redux/slices/collectionsSlice";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { fetchWishlistData } from "../../redux/slices/wishlistSlice";
 
 export default function Collection() {
-
+const router = useRouter()
 const data = useSelector(state => state.collections)
+const wishlistData = useSelector(state => state.wishlist)
 const dispatch = useDispatch()
-//  const fetchWishlistData = async () => {
-//   const response = await fetch("http://localhost:4000/v1/wishlist", {
-//     method: "GET",
-//     headers: {
-//       Accept: "application/json",
-//       "Content-Type": "application/json",
-//     },
-//     credentials: "include",
-    
-//   });
-//   const data = await response.json();
-//   if(Array.isArray(data)){
-//     setWishlistData(data?.map(datum => datum.Product))
-//   } 
-// };
+
 const loadData = async () => {
   await dispatch(fetchCollectionData())
+ 
 }
-useEffect(()=>{
-  loadData()
-},[])
 
-// useEffect(()=>{
-//   fetchWishlistData()
-// },[])
+const loadWishlistData = async () => {
+  await dispatch(fetchWishlistData())
+}
+
+useEffect(()=>{
+  if(!router.isReady) return
+  loadWishlistData()
+  loadData()
+},[router.isReady])
+
   return (
     <>
       <MainNavbar />
@@ -50,7 +44,7 @@ useEffect(()=>{
 
      {/* divider  */}
 
-     <Divider variant="middle"/>
+     <Divider variant="middle" sx={{mt:2}} />
 
       {/* Collection List */}
       <Container>
@@ -60,13 +54,11 @@ useEffect(()=>{
         spacing={{ xs: 2, md: 3 }}
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
-        {data.data?.map((datum, idx) => (
+        {data?.data.map((datum, idx) => (
            <Grid item xs={4} sm={4} md={4} key={idx}>
-           <Show data={datum}  />
+           <Show data={datum} wishlist={wishlistData?.data.find(data => data.id === datum.id)} />
          </Grid>
         ))}
-
-
       </Grid>
       </Container>
       

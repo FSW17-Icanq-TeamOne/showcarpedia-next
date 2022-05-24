@@ -16,7 +16,7 @@ class wishlistController {
       if (checkProduct) {
         return res.status(200).json("product has been added");
       } else {
-        await Wishlist.create(payloadWishlist);
+       await Wishlist.create(payloadWishlist);
         return res.status(200).json("wishlist created");
       }
     } catch (error) {
@@ -44,7 +44,7 @@ class wishlistController {
           },
         ],
       });
-      if (!data.length) return res.json("please add new product");
+      if (!data.length) return res.status(400).json("please add new product");
      return res.status(200).json(data);
     } catch (error) {
       throw error;
@@ -111,9 +111,10 @@ class wishlistController {
           ProductId: Number(ProductId),
         },
       });
-      if (data == 1) {
+      if (data === 1) {
         return res.status(200).json({
-          data: "deleted",
+          message: "deleted",
+          id:ProductId
         });
       }
     } catch (error) {
