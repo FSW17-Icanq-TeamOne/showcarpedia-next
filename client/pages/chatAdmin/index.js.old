@@ -1,7 +1,11 @@
+import { fetchUname } from "../../redux/slices/chatsSlice/getUnameSlice";
+import { fetchRoomLists } from "../../redux/slices/chatsSlice/getRoomLists";
 import { MainContext } from "../../context/mainContext";
 import { SocketContext } from "../../context/socketContext";
 import { useFormik } from "formik";
 import { RiSendPlaneFill } from "react-icons/ri";
+import Link from 'next/link'
+
 import {
   Paper,
   Grid,
@@ -16,8 +20,10 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
 import React, { useContext, useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
+import { useNavigate } from "react-router-dom";
 import { useRouter } from 'next/router'
 
 const useStyles = makeStyles({
@@ -54,11 +60,18 @@ const useStyles = makeStyles({
 export default function Chats() {
   const { name, room, setName, setRoom } = useContext(MainContext)
   const socket = useContext(SocketContext)
+  
   const [messages, setMessages] = useState([])
   const [roomLists, setRoomLists] = useState([])
 
-  const router = useRouter()
-
+    // const data = useSelector((state) => [state.getChats]);
+    // data.map((chat, i) =>
+    // //   setMessages((messages) => [
+    // //     ...messages,
+    // //     { user: chat.User.Username, text: chat.Chat },
+    // //   ]) 
+    // console.log(chat)
+    // );
   useEffect(() => {
     fetch('http://localhost:3001/v1/chat/rooms/', {
           credentials: "include",
@@ -68,16 +81,19 @@ export default function Chats() {
     .catch((err) => console.log(err))
   },[])
 
+    const router = useRouter()
+      
   useEffect(() => {
     if(room.length > 0){
-      console.log('Room:',room)
-      socket.emit('login', {room}, error => {
-          if (error) {
-              console.log(error)
-          }
-      })
+      console.log('ini dari',room)
+      // socket.emit('login', {room}, error => {
+      //     if (error) {
+      //         console.log(error)
+      //     }
+      // })
       setRoom('')
-      router.push(`/chatAdmin?room=${room}`)
+      setName('')
+
       fetch(`http://localhost:3001/v1/chat/chat/${room}`, {
       credentials: 'include'
       })
@@ -92,16 +108,7 @@ export default function Chats() {
       )
       .catch(err => console.log(err));
     }
-  }) 
-
-  useEffect(() => {
-    fetch('http://localhost:3001/v1/chat/name/', {
-      credentials: 'include',
-    })
-      .then(data => data.json())
-      .then(data => setName(data.username))
-      .catch(err => console.log(err));
-  }, []);
+  })
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -125,8 +132,10 @@ export default function Chats() {
         .then(data => { 
           let msg = data.chat.Chat;
           let room = router.query.room
-          console.log("ruangannya", room)
           socket.emit('sendMsg', { name, room, msg });
+          socket.on("message", (msg) => {
+            setMessages((messages) => [...messages, msg]);
+          });
           formik.setFieldValue('chatBox', '');
         })
         .catch(err => {
@@ -134,14 +143,7 @@ export default function Chats() {
         });
     },
   });
-
-  useEffect(() => {
-    socket.on('message', msg => {
-      console.log(msg);
-      setMessages(messages => [...messages, msg]);
-    });
-  }, [socket]);
-
+  
 //   const logout = () => {
 //     setName("");
 //     setRoom("");
@@ -156,10 +158,10 @@ export default function Chats() {
       <Grid container component={Paper} className={classes.chatSection}>
         <Grid item xs={3} className={classes.borderRight500}>
           <List>
-            <ListItem button key="Administrator"  onClick={() => window.location.assign("/chatAdmin")}>
+            <ListItem button key="RemySharp">
               <ListItemIcon>
                 <Avatar
-                  alt="Administrator"
+                  alt="Remy Sharp"
                   src="https://material-ui.com/static/images/avatar/1.jpg"
                 />
               </ListItemIcon>
@@ -173,7 +175,8 @@ export default function Chats() {
               roomLists.map(rooms => {
                 return(
                 <List>
-                    <ListItem button onClick={() => {setRoom(rooms.Room); setMessages([])}}>
+                    {/* <Link href={`/chatAdmin?room=${rooms.Room}`} passHref> */}
+                    <ListItem button onClick={() => { router.push(`/chatAdmin?room=${rooms.Room}`); setRoom(rooms.Room); setMessages([]);}}>
                     <ListItemIcon>
                         <Avatar
                         alt="Administrator"
@@ -182,6 +185,7 @@ export default function Chats() {
                     </ListItemIcon>
                     <ListItemText >{rooms.User.username}</ListItemText>
                     </ListItem>
+                    {/* </Link> */}
                 </List>
                 )
             })
