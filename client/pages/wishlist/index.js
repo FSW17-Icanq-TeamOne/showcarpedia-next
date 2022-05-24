@@ -36,7 +36,7 @@ const fetchData = async () => {
         >
           <Grid item xs={12}> 
           <Typography variant="h4">Wishlist</Typography>
-          <Typography>{data.length} item</Typography>
+          <Typography>{data.data.length} item</Typography>
           </Grid>
           {data.data.length?(
             data.data.map((datum, idx) => (
