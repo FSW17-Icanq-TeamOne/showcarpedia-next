@@ -34,7 +34,6 @@ export const fetchCollectionDataById = createAsyncThunk("collections/fetchDataBy
 
 export const getFilterData = createAsyncThunk("collections/fetchFilterData", async(query,thunkAPI) => {
 
-  console.log(query)
   try {
     const response = await fetch(
       `http://localhost:3001/v1/cars/search?mileages=${query.mileages}&minYear=${query.minYear}&grade=${query.grade}&brand=${query.brand}&category=${query.category}`,
@@ -89,13 +88,13 @@ export const collectionsSlice = createSlice({
             state.isLoading = true
         })
         builder.addCase(getFilterData.fulfilled, (state,action) => {
-            console.log(action)
             state.isLoading = false
             state.data = action.payload
         })
         builder.addCase(getFilterData.rejected, (state,action) => {
           console.log(action)
             state.isLoading = false
+            state.data = []
             state.errMessage = action.payload
         })
     }

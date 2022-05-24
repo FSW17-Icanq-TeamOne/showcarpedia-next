@@ -155,7 +155,7 @@ class carsController {
         where:{
           ...filteredQuery,
           kiloMeter: {
-            [Op.gte]: Number(mileages) 
+            [Op.lte]: Number(mileages) <= 0 ? 1000000 : Number(mileages) 
           },
           year: {
             [Op.gte]: Number(minYear) 

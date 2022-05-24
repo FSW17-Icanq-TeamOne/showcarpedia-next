@@ -38,7 +38,16 @@ const router = useRouter()
       const year = Number(values.minYear);
       const grade = Number(values.grades);
       const mileages = Number(values.maxMileages);
-      router.push(`/search?mileages=${mileages}&minYear=${year}&grade=${grade}&brand=${values.brand}&category=${values.category}`)
+      router.push({
+        pathname:"search",
+        query:{
+          mileages:mileages,
+          minYear:year,
+          grade:grade,
+          brand:values.brand,
+          category:values.category
+        }
+      },)
      
     },
   });
@@ -63,6 +72,7 @@ const router = useRouter()
                 onBlur={formik.handleBlur}
                 onChange={(e) => formik.setFieldValue("brand", e.target.value)}
               >
+                <MenuItem value="">Brand</MenuItem>
                 {data.brands?.map((e, i) => (
                   <MenuItem value={e} key={i}>
                     {e}
@@ -84,6 +94,7 @@ const router = useRouter()
                   formik.setFieldValue("category", e.target.value)
                 }
               >
+                <MenuItem value="">Category</MenuItem>
                 {data?.categories.map((e, i) => (
                   <MenuItem value={e} key={i}>
                     {e}
@@ -105,6 +116,7 @@ const router = useRouter()
                   formik.setFieldValue("minYear", e.target.value)
                 }
               >
+                <MenuItem value="">Year</MenuItem>
                 {data?.year.map((e, i) => (
                   <MenuItem value={e} key={i}>
                     {e}
@@ -126,9 +138,10 @@ const router = useRouter()
                   formik.setFieldValue("maxMileages", e.target.value)
                 }
               >
+                <MenuItem value="">MaxMileages</MenuItem>
                 {data?.mileages.map((e, i) => (
                   <MenuItem value={e} key={i}>
-                    {e}
+                   <span>&#62; </span> {e}
                   </MenuItem>
                 ))}
               </Select>
@@ -145,6 +158,7 @@ const router = useRouter()
                 onBlur={formik.handleBlur}
                 onChange={(e) => formik.setFieldValue("grades", e.target.value)}
               >
+                <MenuItem value="">Grades</MenuItem>
                 {data?.grades.map((e, i) => (
                   <MenuItem value={e} key={i}>
                     {e}

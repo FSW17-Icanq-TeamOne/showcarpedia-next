@@ -7,11 +7,11 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getFilterData } from "../../redux/slices/collectionsSlice";
 import { useEffect } from "react";
+import { fetchCarMakeData } from "../../redux/slices/carMakeSlice";
 
 export default function CollectionFilter() {
 const router = useRouter()
 const query = router.query
-console.log(query)
 const dispatch = useDispatch()
 const data = useSelector(state => state.collections)
 
@@ -19,10 +19,14 @@ const fetchData = async ()=> {
   await dispatch(getFilterData(query))
 }
 
+const fetchCarMake = async () => {
+  await dispatch(fetchCarMakeData())
+}
+
 useEffect(() => {
-  if(!router.isReady) return
+  fetchCarMake()
   fetchData()
-},[router.isReady,query])
+},[query])
   return (
     <>
       <MainNavbar />
@@ -44,9 +48,9 @@ useEffect(() => {
           container
           spacing={{ xs: 2, md: 3 }}
           columns={{ xs: 4, sm: 8, md: 12 }}
-          justifyContent={data.errMessage?"center":"none"}
+          justifyContent={!data.data.length?"center":"none"}
         >
-        {data.errMessage ? (
+        {!data.data.length ? (
        <Grid item>
          <Grid container justifyContent="center" flexDirection="column" alignItems="center">
        <Typography variant="h4" mb={2}>Oops, product not found </Typography>
