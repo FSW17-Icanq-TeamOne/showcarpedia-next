@@ -6,7 +6,7 @@ const router = require("./routes")
 const server = require('http').createServer(app)
 const io = require('socket.io')(server, {
     cors: {
-        origin: "*",
+        origin: "http://localhost:3001",
         credentials: true,
         methods: ["GET", "POST"]
     }
@@ -24,13 +24,10 @@ io.on('connection', (socket) => {
     socket.on('login', ({room}) => {
         console.log('User connected')
         socket.join(room)
-        console.log(room)
     })
 
     socket.on('sendMsg',({name, room, msg}) => {
-        socket.join(room)
-        console.log('ini room',room)
-        console.log(name, room, msg)
+        // socket.join(room)
         io.to(room).emit('message', {
             user: name,
             text: msg
