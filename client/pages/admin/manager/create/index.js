@@ -29,9 +29,9 @@ export default function AdminManagerCreate() {
         })
         .then((data) => {
           console.log(data, "This is the Data");
-          if (data.message === "Success") {
-            router.push("/admin/manager/lists");
-          }
+          // if (data.message === "Success") {
+            window.location.assign("/admin/manager/lists");
+          // }
         })
         .catch((err) => {
           console.log(err);
