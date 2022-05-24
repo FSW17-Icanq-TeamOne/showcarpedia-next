@@ -181,10 +181,10 @@ const socket = useContext(SocketContext);
       <Grid container component={Paper} className={classes.chatSection}>
         <Grid item xs={3} className={classes.borderRight500}>
           <List>
-            <ListItem button key="RemySharp">
+            <ListItem button key="User">
               <ListItemIcon>
                 <Avatar
-                  alt="Remy Sharp"
+                  alt="User"
                   src="https://material-ui.com/static/images/avatar/1.jpg"
                 />
               </ListItemIcon>
