@@ -2,22 +2,30 @@ import { Button, Grid, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import SecondNavbar from '../../component/NavBar/SecondNavbar'
-
+import { useDispatch } from "react-redux"
 import styles from '../../styles/Login+Register.module.css';
+import { loginAccount } from '../../redux/slices/accountSlice';
+import Cookies from "js-cookie"
+import Router from "next/router"
 
 export default function Login () {
-    const router = useRouter();
-
+    const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
             username: '',
             password: ''
         },
-        onSubmit: values => {
-            console.log(values, 'user is logged in')
-
-            // router.push as navigate substitute
-            router.push('/')
+        onSubmit: async values => {
+            const login = await dispatch(loginAccount(values))
+            console.log(login)
+            if(login.error) {
+                console.log(login.payload?.message)
+            } else{
+                localStorage.setItem('id', login.payload.id);
+                localStorage.setItem('role', login.payload.role)
+                Cookies.set("access_token",login.payload.access_token,{path:"/",expires:70})
+                Router.push("/")
+            }
         }
     })
 
