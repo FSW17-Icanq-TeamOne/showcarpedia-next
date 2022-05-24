@@ -1,5 +1,5 @@
-import { MainContext } from "../../context/mainContext";
-import { SocketContext } from "../../context/socketContext";
+import { MainContext } from "../../../context/mainContext";
+import { SocketContext } from "../../../context/socketContext";
 import { useFormik } from "formik";
 import { RiSendPlaneFill } from "react-icons/ri";
 import {
@@ -77,7 +77,7 @@ export default function Chats() {
           }
       })
       setRoom('')
-      router.push(`/chatAdmin?room=${room}`)
+      router.push(`/admin/chat?room=${room}`)
       fetch(`http://localhost:3001/v1/chat/chat/${room}`, {
       credentials: 'include'
       })
@@ -156,7 +156,7 @@ export default function Chats() {
       <Grid container component={Paper} className={classes.chatSection}>
         <Grid item xs={3} className={classes.borderRight500}>
           <List>
-            <ListItem button key="Administrator"  onClick={() => window.location.assign("/chatAdmin")}>
+            <ListItem button key="Administrator"  onClick={() => window.location.assign("/admin/chat")}>
               <ListItemIcon>
                 <Avatar
                   alt="Administrator"

@@ -36,7 +36,7 @@ const columns = [
                     color='error'
                     size='small'
                     onClick={() => {
-                        fetch(`http://localhost:4000/v1/admin/delete/${cellValues.getValue(cellValues.id, 'id')}`,
+                        fetch(`http://localhost:3001/v1/admin/delete/${cellValues.getValue(cellValues.id, 'id')}`,
                         {
                             method: 'DELETE',
                             credentials: 'include'
@@ -62,7 +62,7 @@ const AdminManagerTable = () => {
     const [tableData, setTableData] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:4000/v1/admin', {
+        fetch('http://localhost:3001/v1/admin', {
             credentials: 'include'
         })
             .then(data => data.json())
@@ -88,7 +88,7 @@ const AdminManagerTable = () => {
                                 <DataGrid
                                     autoHeight
                                     rows={tableData}
-                                    columns={colums}
+                                    columns={columns}
                                     pageSize={5}
                                     rowsPerPageOptions={[5]}
                                 />
