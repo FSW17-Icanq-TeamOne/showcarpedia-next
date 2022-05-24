@@ -1,17 +1,23 @@
 import { Grid, IconButton, Typography } from '@mui/material';
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import ChatIcon from '@mui/icons-material/Chat';
+import {MainContext} from '../../context/mainContext'
+import {SocketContext} from '../../context/socketContext'
+
 
 import styles from '../../styles/HomePage.module.css';
 
 export default function MainNavbar () {
     const [cookie, setCookie, removeCookie] = useCookies(['access_token']);
     const [role, setRole] = useState(null);
+    const {room, setRoom} = useContext(MainContext)
+    const socket = useContext(SocketContext)
 
     const removeAccessToken = () => {
         window.localStorage.clear();
@@ -26,6 +32,24 @@ export default function MainNavbar () {
         const getRole = localStorage.getItem('role');
         setRole(getRole)
     }, [])
+
+    useEffect(() => {
+        fetch('http://localhost:3001/v1/chat/room/', {
+            credentials: "include",
+        })
+      .then((data) => data.json())
+      .then((data) => setRoom(data.Room))
+      .catch((err) => console.log(err));
+    }, [])
+
+    const handleClick = () => {
+        socket.emit('login', {room}, error => {
+            if (error) {
+                console.log(error)
+            }
+            console.log("Connect to:", room)
+        })
+   }
 
     return (
         <Grid
@@ -138,6 +162,19 @@ export default function MainNavbar () {
                             >
                                 <FavoriteIcon />
                             </IconButton>
+                        )}
+                    </Grid>
+
+                    <Grid item>
+                        {(role === 'user') && (
+                            <Link href={"/chat"} passHref>
+                            <IconButton
+                                aria-label='Chat'
+                                onClick={handleClick}
+                            >
+                                <ChatIcon />
+                            </IconButton>
+                            </Link>
                         )}
                     </Grid>
 
