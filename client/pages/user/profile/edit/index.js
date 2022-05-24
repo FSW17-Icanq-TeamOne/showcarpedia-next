@@ -154,7 +154,7 @@ export default function Profile() {
     });
   
     useEffect(() => {
-      fetch("http://localhost:4000/v1/user/profile/", {
+      fetch("http://localhost:3001/v1/user/profile/", {
         credentials: "include",
       })
         .then((data) => data.json())
@@ -174,7 +174,7 @@ export default function Profile() {
       },
       onSubmit: (values) => {
         //console.log(values, 'UserUpdated')
-        fetch("http://localhost:4000/v1/user/profile", {
+        fetch("http://localhost:3001/v1/user/profile", {
           method: "PUT",
           headers: {
             Accept: "application/json",
@@ -189,7 +189,7 @@ export default function Profile() {
           .then((data) => {
             console.log(data, "This is the Data");
             if (data.message === "Success") {
-              router.push("/user/edit/profile");
+              router.push("/user/profile/edit");
               window.location.reload();
             }
           })
