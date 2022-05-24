@@ -7,7 +7,7 @@ const CarouselDetail = ({ images }) => {
       <Carousel>
         {images?.map((e, idx) => (
           <Carousel.Item key={idx}>
-            <img style={{ width: "100%", maxHeight:"500px" }} layout="fill"  src={e} alt={e} />
+            <Image  layout="responsive" width="200px" height="100%"  src={e} alt={e} />
           </Carousel.Item>
         ))}
       </Carousel>

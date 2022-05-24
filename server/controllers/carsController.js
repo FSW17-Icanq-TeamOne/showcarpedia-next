@@ -165,7 +165,7 @@ class carsController {
           },
        }
       });
-      if (!data.length) return res.json("data not found");
+      if (!data.length) return res.status(400).json("data not found");
      return  res.status(200).json(data);
     } catch (error) {
       throw error;
