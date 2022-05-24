@@ -16,9 +16,9 @@ import {
 import { Menu as MenuIcon, DirectionsCar } from "@mui/icons-material";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
-import {AdminSidebar} from '../../component/Dashboard/DashboardSidebarAdmin';
+import {AdminSidebar} from './DashboardSidebarAdmin';
 
-export default function Admin () {
+export default function AdminNavbar () {
     const [cookie, setCookie, removeCookir] = useCookies('access_token');
     const [isToggle, setIsToggle] = useState(true);
 

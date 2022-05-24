@@ -88,7 +88,7 @@ const AdminManagerTable = () => {
                                 <DataGrid
                                     autoHeight
                                     rows={tableData}
-                                    columns={colums}
+                                    columns={columns}
                                     pageSize={5}
                                     rowsPerPageOptions={[5]}
                                 />
