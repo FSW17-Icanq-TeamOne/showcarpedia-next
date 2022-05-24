@@ -58,7 +58,7 @@ function DashboardSidebarAdmin() {
 
         {role === "superAdmin" && (
           <Link
-            href="/admin/lists"
+            href="/admin/manager/lists"
             style={{ textDecoration: "none", color: "black" }}
           >
             <ListItem disablePadding>

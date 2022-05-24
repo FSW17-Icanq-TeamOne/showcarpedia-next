@@ -16,7 +16,7 @@ const columns = [
                     color='primary'
                     size='small'
                     style={{ textDecoration: 'none', color: 'white' }}
-                    href={`/admin/edit/account/${cellValues.getValue(
+                    href={`/admin/manager/edit/${cellValues.getValue(
                         cellValues.id,
                         'id'
                     )}`}
@@ -99,7 +99,7 @@ const AdminManagerTable = () => {
                     <Grid item xs={12}>
                         <Button
                             variant='contained'
-                            href={'/admin/create/account'}
+                            href={'/admin/manager/create'}
                             style={{ textDecoration: 'none', color: 'white' }}
                         >
                             Create Admin
