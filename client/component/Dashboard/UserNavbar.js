@@ -20,8 +20,8 @@ import { UserSidebar } from "./DashboardSidebarUser";
 
 export default function UserNavbar () {
     const [cookie, setCookie, removeCookie] = useCookies('access_token');
-    const [isToggle, setIsToggle] = useState(null);
-    const [anchorEl, setAnchorElUser] = useState(null);
+    const [isToggle, setIsToggle] = useState(true);
+    const [anchorElUser, setAnchorElUser] = useState(null);
     
     const handleToggle = () => {
         setIsToggle(prev => !prev);

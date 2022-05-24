@@ -1,11 +1,11 @@
 import { Button, Box, Grid, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import UserNavbar from '../../../component/Dashboard/UserNavbar';
+import UserNavbar from '../../../../component/Dashboard/UserNavbar';
 import React, { useState, useEffect } from "react";
-import { UseRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 export default function AccountSetting () {
-    const router = UseRouter();
+    const router = useRouter();
 
     const [accountData, setaccountData] = useState({
         username: "",
@@ -14,7 +14,7 @@ export default function AccountSetting () {
       });
     
     useEffect(() => {
-    fetch("http://localhost:4000/v1/user/account/", {
+    fetch("http://localhost:3001/v1/user/account/", {
         credentials: "include",
     })
         .then((data) => data.json())
@@ -31,7 +31,7 @@ export default function AccountSetting () {
     },
     onSubmit: (values) => {
         //console.log(values, 'AccountUpdated')
-        fetch("http://localhost:4000/v1/user/account", {
+        fetch("http://localhost:3001/v1/user/account", {
         method: "PUT",
         headers: {
             Accept: "application/json",
@@ -46,7 +46,7 @@ export default function AccountSetting () {
         .then((data) => {
             console.log(data, "This is the Data");
             if (data.message === "Success") {
-            router.push("/user/edit/account");
+            router.push("/user/account/edit");
             }
         })
         .catch((err) => {

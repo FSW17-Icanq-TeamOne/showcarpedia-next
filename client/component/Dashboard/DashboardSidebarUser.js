@@ -110,7 +110,7 @@ function DashboardSideBarUser () {
 export const UserSidebar = React.forwardRef((props, ref) => {
     return (
         <div ref={ref} {...props}>
-            <DashboardSidebarUser />
+            <DashboardSideBarUser />
         </div>
     )
 })

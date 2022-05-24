@@ -19,12 +19,50 @@ import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/material/styles";
 import PropTypes from "prop-types";
 import { useFormik } from "formik";
-import UserNavbar from '../../../component/Dashboard/UserNavbar';
+import UserNavbar from '../../../../component/Dashboard/UserNavbar';
 import React, { useState, useEffect } from "react";
-import { UseRouter } from 'next/router';
-import { storage } from "../../config/firebase";
+import { useRouter } from 'next/router';
+import { storage } from "../../../../config/firebase";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiDialogContent-root": {
+    padding: theme.spacing(2),
+  },
+  "& .MuiDialogActions-root": {
+    padding: theme.spacing(1),
+  },
+}));
+
+const BootstrapDialogTitle = (props) => {
+  const { children, onClose, ...other } = props;
+
+  return (
+    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: "absolute",
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  );
+};
+
+BootstrapDialogTitle.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+};
 
 export default function Profile() {
     const [open, setOpen] = React.useState(false);
@@ -104,7 +142,7 @@ export default function Profile() {
       );
     };
   
-    const router = useRouter();
+    const router = useRouter()
   
     const [profileData, setprofileData] = useState({
       fullName: "",
