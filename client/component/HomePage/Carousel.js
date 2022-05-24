@@ -1,5 +1,6 @@
 import { Carousel } from "react-bootstrap";
 
+// this is carousel
 export default function CarouselContainer () {
     return (
         <Carousel>
