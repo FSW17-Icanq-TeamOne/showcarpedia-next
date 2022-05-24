@@ -1,8 +1,6 @@
-import { fetchRoom } from "../../redux/slices/chatsSlice/getRoomSlice";
-import { fetchUname } from "../../redux/slices/chatsSlice/getUnameSlice";
-import { fetchChats } from "../../redux/slices/chatsSlice/getChats";
-import { MainContext } from "../../context/mainContext";
-import { SocketContext } from "../../context/socketContext";
+import { fetchUname } from "../../../redux/slices/chatsSlice/getUnameSlice";
+import { MainContext } from "../../../context/mainContext";
+import { SocketContext } from "../../../context/socketContext";
 import { useFormik } from "formik";
 import { RiSendPlaneFill } from "react-icons/ri";
 import {
@@ -22,7 +20,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useContext, useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
-// import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   table: {

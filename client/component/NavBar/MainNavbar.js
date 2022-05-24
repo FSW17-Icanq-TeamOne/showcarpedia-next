@@ -25,10 +25,6 @@ export default function MainNavbar () {
         removeCookie('access_token');
     };
 
-    // const getRoleFromLocalStorage = () => {
-    //     const 
-    // }
-
     useEffect(() => {
         const getRole = localStorage.getItem('role');
         setRole(getRole)
@@ -48,7 +44,6 @@ export default function MainNavbar () {
             if (error) {
                 console.log(error)
             }
-            console.log("Connect to:", room)
         })
    }
 
@@ -117,7 +112,7 @@ export default function MainNavbar () {
                         {role === 'superAdmin' && (
                             <IconButton
                                 aria-label='Account'
-                                onClick={() => window.location.assign('/admin-list')}
+                                onClick={() => window.location.assign('/admin/manager/lists')}
                             >
                                 <SettingsIcon />
                             </IconButton>
@@ -125,7 +120,7 @@ export default function MainNavbar () {
                         {role === 'admin' && (
                             <IconButton
                                 aria-label='Account'
-                                onClick={() => window.location.assign('/product-list')}
+                                onClick={() => window.location.assign('/admin/collection/lists')}
                             >
                                 <SettingsIcon />
                             </IconButton>
@@ -147,7 +142,7 @@ export default function MainNavbar () {
                     {(role === 'user' || role === 'admin' || role === 'superAdmin') && (
                         <IconButton
                             aria-label='Account'
-                            onClick={() => window.location.assign('edit/profile')}
+                            onClick={() => window.location.assign('/user/profile/edit')}
                         >
                             <PersonIcon />
                         </IconButton>
@@ -168,7 +163,7 @@ export default function MainNavbar () {
 
                     <Grid item>
                         {(role === 'user') && (
-                            <Link href={"/chat"} passHref>
+                            <Link href={"/user/chat"} passHref>
                             <IconButton
                                 aria-label='Chat'
                                 onClick={handleClick}

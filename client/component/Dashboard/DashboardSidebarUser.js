@@ -14,15 +14,27 @@ import {
     List,
     Link,
 } from "@mui/material";
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
+import {MainContext} from '../../context/mainContext'
+import {SocketContext} from '../../context/socketContext'
 
 function DashboardSideBarUser () {
     const [role, setRole] = useState(null);
+    const {room, setRoom} = useContext(MainContext)
+    const socket = useContext(SocketContext)
 
     useEffect(() => {
         const getRole = localStorage.getItem('role');
         setRole(getRole);
     })
+
+    const handleClick = () => {
+      socket.emit('login', {room}, error => {
+          if (error) {
+              console.log(error)
+          }
+      })
+ }
 
     return (
         <Box style={{ height: "calc(100vh - 64px)" }}>
@@ -42,7 +54,7 @@ function DashboardSideBarUser () {
           </Link>
   
           <Link
-            href="/edit/profile"
+            href="/user/profile/edit"
             style={{ textDecoration: "none", color: "black" }}
           >
             <ListItem disablePadding>
@@ -58,7 +70,7 @@ function DashboardSideBarUser () {
             </ListItem>
           </Link>
   
-          <Link href="#" style={{ textDecoration: "none", color: "black" }}>
+          <Link href="/wishlist" style={{ textDecoration: "none", color: "black" }}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -71,10 +83,11 @@ function DashboardSideBarUser () {
               </ListItemButton>
             </ListItem>
           </Link>
-  
-          <Link href="#" style={{ textDecoration: "none", color: "black" }}>
-            <ListItem disablePadding>
-              <ListItemButton>
+
+          {role === "user" && (
+          <Link href="/user/chat" style={{ textDecoration: "none", color: "black" }}>
+            <ListItem disablePadding >
+              <ListItemButton button onClick={handleClick}>
                 <ListItemIcon>
                   <Forum />
                 </ListItemIcon>
@@ -85,9 +98,10 @@ function DashboardSideBarUser () {
               </ListItemButton>
             </ListItem>
           </Link>
-  
+          )}
+
           <Link
-            href="/edit/account"
+            href="/user/account/edit"
             style={{ textDecoration: "none", color: "black" }}
           >
             <ListItem disablePadding>
