@@ -42,7 +42,7 @@ function DashboardSideBarUser () {
           </Link>
   
           <Link
-            href="/edit/profile"
+            href="/user/profile/edit"
             style={{ textDecoration: "none", color: "black" }}
           >
             <ListItem disablePadding>
@@ -58,7 +58,7 @@ function DashboardSideBarUser () {
             </ListItem>
           </Link>
   
-          <Link href="#" style={{ textDecoration: "none", color: "black" }}>
+          <Link href="/user/wishlists" style={{ textDecoration: "none", color: "black" }}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -72,7 +72,7 @@ function DashboardSideBarUser () {
             </ListItem>
           </Link>
   
-          <Link href="#" style={{ textDecoration: "none", color: "black" }}>
+          <Link href="/user/chat" style={{ textDecoration: "none", color: "black" }}>
             <ListItem disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -87,7 +87,7 @@ function DashboardSideBarUser () {
           </Link>
   
           <Link
-            href="/edit/account"
+            href="/user/account/edit"
             style={{ textDecoration: "none", color: "black" }}
           >
             <ListItem disablePadding>
