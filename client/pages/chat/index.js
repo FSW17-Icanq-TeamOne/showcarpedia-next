@@ -58,7 +58,6 @@ const useStyles = makeStyles({
 export default function Chats() {
   const { name, room, setName, setRoom } = useContext(MainContext);
 const socket = useContext(SocketContext);
-  
   const [messages, setMessages] = useState([]);
 
 //   const navigate = useNavigate();
@@ -67,8 +66,8 @@ const socket = useContext(SocketContext);
     const theUname = useSelector((state) => state.getUname.data.username)
     setName(theUname);
     
-    const theRoom = useSelector((state) => state.getRoom.data.Room)
-    setRoom(theRoom);
+    // const theRoom = useSelector((state) => state.getRoom.data.Room)
+    // setRoom(theRoom);
 
     // const data = useSelector((state) => [state.getChats]);
     // data.map((chat, i) =>
@@ -78,6 +77,9 @@ const socket = useContext(SocketContext);
     // //   ]) 
     // console.log(chat)
     // );
+
+
+
 
     useEffect(() => {
       fetch('http://localhost:3001/v1/chat/chat/', {
@@ -97,30 +99,36 @@ const socket = useContext(SocketContext);
 
   const dispatch = useDispatch();
 
-  const loadRoom = async () => {
-    await dispatch(fetchRoom());
-  };
+  // const loadRoom = async () => {
+  //   await dispatch(fetchRoom());
+   
+  // };
 
   const loadUname = async () => {
     await dispatch(fetchUname());
   };
 
-  const loadChats = async () => {
-    await dispatch(fetchChats());
-  };
+  useEffect(() => {
+    fetch('http://localhost:3001/v1/chat/room/', {
+      credentials: 'include',
+    })
+      .then(data => data.json())
+      .then(data => setRoom(data.Room))
+      .catch(err => console.log(err))
+  }, [])
 
   useEffect(() => {
-    loadRoom();
-   
-  }, []);
+    if(room.length > 0){
+    socket.emit('login', {room}, error => {
+      if (error) {
+          console.log(error)
+      }
+  })
+}
+  }, [socket])
 
   useEffect(() => {
     loadUname();
-    
-  }, []);
-
-  useEffect(() => {
-    loadChats();
   }, []);
 
   const formik = useFormik({
