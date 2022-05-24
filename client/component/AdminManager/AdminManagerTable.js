@@ -16,7 +16,7 @@ const columns = [
                     color='primary'
                     size='small'
                     style={{ textDecoration: 'none', color: 'white' }}
-                    href={`/admin/edit/account/${cellValues.getValue(
+                    href={`/admin/manager/edit/${cellValues.getValue(
                         cellValues.id,
                         'id'
                     )}`}
@@ -36,7 +36,7 @@ const columns = [
                     color='error'
                     size='small'
                     onClick={() => {
-                        fetch(`http://localhost:4000/v1/admin/delete/${cellValues.getValue(cellValues.id, 'id')}`,
+                        fetch(`http://localhost:3001/v1/admin/delete/${cellValues.getValue(cellValues.id, 'id')}`,
                         {
                             method: 'DELETE',
                             credentials: 'include'
@@ -62,7 +62,7 @@ const AdminManagerTable = () => {
     const [tableData, setTableData] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:4000/v1/admin', {
+        fetch('http://localhost:3001/v1/admin', {
             credentials: 'include'
         })
             .then(data => data.json())
@@ -99,7 +99,7 @@ const AdminManagerTable = () => {
                     <Grid item xs={12}>
                         <Button
                             variant='contained'
-                            href={'/admin/create/account'}
+                            href={'/admin/manager/create'}
                             style={{ textDecoration: 'none', color: 'white' }}
                         >
                             Create Admin
