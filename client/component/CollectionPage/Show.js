@@ -9,17 +9,27 @@ import {
   } from "@mui/material";
   import Link from "next/link";
   import { FavoriteOutlined } from "@mui/icons-material";
-  import React, { useState } from "react";
+  import React, { useMemo, useState } from "react";
   import { Snackbar } from "@mui/material";
   import { Close } from "@mui/icons-material";
   import { SnackbarContent } from "@mui/material";
   import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addWishlist, deleteWishlist, fetchWishlistData } from "../../redux/slices/wishlistSlice";
+import { useRouter } from "next/router";
   export default function Show({data,wishlist}) {
+    const router = useRouter()
     const [isWishlist, setIsWishlist] = useState(false);
-    const [message, setMessage] = useState(null)
+    const [message, setMessage] = useState("")
   const [isOpen,setIsOpen] = useState(false)
-  
+  const dispatch = useDispatch()
   const handleClose = () => setIsOpen(false)
+  
+useEffect(() => {
+ if(wishlist?.id === data.id) {
+   setIsWishlist(true)
+ }
+},[])
   
   const action = (
   <React.Fragment>
@@ -34,36 +44,15 @@ import {
   </IconButton>
   </React.Fragment>
   )
-  useEffect(()=>{
-    if(wishlist?.id === data.id){
-      setIsWishlist(true)
-    } else{
-      setIsWishlist(false)
-    }
-  },[])
-  
+
+
+
+
     const handleWishlist = async () => {
-      const response = await fetch('http://localhost:3001/v1/wishlist', {
-        method: 'post',
-        headers: { 
-            Accept: 'application/json',
-            "Content-Type": 'application/json',
-          },
-        credentials: "include",
-        body: JSON.stringify({ProductId:data.id})
-    })
-    const message = await response.json()
-    switch (message) {
+      const message = await dispatch(addWishlist(data.id))
+    switch (message.payload) {
       case "product has been added":
-        await fetch("http://localhost:3001/v1/wishlist/delete",{
-          method:"delete",
-          headers: { 
-            Accept: 'application/json',
-            "Content-Type": 'application/json',
-          },
-        credentials: "include",
-        body: JSON.stringify({ProductId:data.id})
-        })
+       await dispatch(deleteWishlist(data.id))
         setIsWishlist(prev=>!prev)
         setMessage("success delete from wishlist")
         setIsOpen(true)
@@ -71,7 +60,7 @@ import {
     
       default:
         setIsWishlist(prev=>!prev)  
-        setMessage(message)
+        setMessage("success add to wishlist")
         setIsOpen(true)
       break
     }

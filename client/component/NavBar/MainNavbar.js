@@ -12,13 +12,14 @@ import {SocketContext} from '../../context/socketContext'
 
 
 import styles from '../../styles/HomePage.module.css';
+import { useRouter } from 'next/router';
 
 export default function MainNavbar () {
     const [cookie, setCookie, removeCookie] = useCookies(['access_token']);
     const [role, setRole] = useState(null);
     const {room, setRoom} = useContext(MainContext)
     const socket = useContext(SocketContext)
-
+    const router = useRouter()
     const removeAccessToken = () => {
         window.localStorage.clear();
         removeCookie('access_token');
@@ -158,7 +159,7 @@ export default function MainNavbar () {
                         {(role === 'user' || role === 'admin' || role === 'superAdmin') && (
                             <IconButton
                                 aria-label='Account'
-                                onClick={() => window.location.assign('/#')}
+                                onClick={() => router.push("/wishlist")}
                             >
                                 <FavoriteIcon />
                             </IconButton>
