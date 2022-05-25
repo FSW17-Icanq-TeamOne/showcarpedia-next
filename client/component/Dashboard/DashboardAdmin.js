@@ -14,13 +14,47 @@ import {
   Link,
 } from "@mui/material";
 import { Menu as MenuIcon, DirectionsCar } from "@mui/icons-material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { AdminSidebar } from "./DashboardSidebarAdmin";
 
 export default function Dashboard() {
   const [cookie, setCookie, removeCookie] = useCookies("access_token");
   const [istoggle, setIsToggle] = useState(true);
+  const [role, setRole] = useState(null);
+  const [avatar, setAvatar] = useState(
+    "https://media.discordapp.net/attachments/960564590574456852/965225077069193326/jhondoe.jpg?width=559&height=559"
+  );
+  const [name, setName] = useState("");
+
+  const removeAccessToken = () => {
+    window.localStorage.clear();
+    removeCookie("access_token");
+  };
+
+  useEffect(() => {
+    const getRole = localStorage.getItem('role');
+    setRole(getRole)
+}, [])
+
+  useEffect(() => {
+    fetch("http://localhost:3001/v1/user/profile/", {
+      credentials: "include",
+    })
+      .then((data) => data.json())
+      .then((data) => {
+        setName(data.fullName);
+        if (data.profilePicture !== null) {
+          setAvatar(data.profilePicture);
+        } else {
+          setAvatar(
+            "https://media.discordapp.net/attachments/960564590574456852/965225077069193326/jhondoe.jpg?width=559&height=559"
+          );
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const handleToggle = () => {
     setIsToggle((prev) => !prev);
   };
@@ -49,7 +83,7 @@ export default function Dashboard() {
             >
               <MenuIcon />
             </IconButton>
-            
+
             {/* Desktop Mode */}
             <DirectionsCar
               sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
@@ -98,7 +132,13 @@ export default function Dashboard() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                  <Typography
+                    mr={2}
+                    sx={{ color: "white", fontWeight: "bold" }}
+                  >
+                    {name}
+                  </Typography>
+                  <Avatar alt="UserAvatar" src={avatar} />
                 </IconButton>
               </Tooltip>
               <Menu
@@ -117,12 +157,33 @@ export default function Dashboard() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Profile</Typography>
+                {(role === "superAdmin" || role === "admin") && (
+                  <MenuItem
+                    onClick={() => {
+                      window.location.assign("/admin/manager/lists");
+                      handleCloseUserMenu;
+                    }}
+                  >
+                    <Typography textAlign="center">Admin Menu</Typography>
                   </MenuItem>
-                  <MenuItem onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">Sign Out</Typography>
-                  </MenuItem>
+                )}
+                <MenuItem
+                  onClick={() => {
+                    window.location.assign("/user/profile/edit");
+                    handleCloseUserMenu;
+                  }}
+                >
+                  <Typography textAlign="center">Profile</Typography>
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    removeAccessToken();
+                    window.location.assign("/login");
+                    handleCloseUserMenu;
+                  }}
+                >
+                  <Typography textAlign="center">Sign Out</Typography>
+                </MenuItem>
               </Menu>
             </Box>
           </Toolbar>

@@ -17,23 +17,37 @@ import {
 import React, {useState, useEffect, useContext} from "react";
 import {MainContext} from '../../context/mainContext'
 import {SocketContext} from '../../context/socketContext'
+import {useRouter} from 'next/router'
 
 function DashboardSideBarUser () {
     const [role, setRole] = useState(null);
     const {room, setRoom} = useContext(MainContext)
     const socket = useContext(SocketContext)
-
+    const router = useRouter()
     useEffect(() => {
         const getRole = localStorage.getItem('role');
         setRole(getRole);
     })
+
+    useEffect(() => {
+      fetch('http://localhost:3001/v1/chat/room/', {
+          credentials: "include",
+      })
+    .then((data) => data.json())
+    .then((data) => setRoom(data.Room))
+    .catch((err) => console.log(err));
+  }, [])
+
 
     const handleClick = () => {
       socket.emit('login', {room}, error => {
           if (error) {
               console.log(error)
           }
+          console.log(room)
+          
       })
+      router.push("/user/chat")
  }
 
     return (
@@ -85,7 +99,7 @@ function DashboardSideBarUser () {
           </Link>
 
           {role === "user" && (
-          <Link href="/user/chat" style={{ textDecoration: "none", color: "black" }}>
+          // <Link href="/user/chat" style={{ textDecoration: "none", color: "black" }} passHref>
             <ListItem disablePadding >
               <ListItemButton button onClick={handleClick}>
                 <ListItemIcon>
@@ -97,11 +111,11 @@ function DashboardSideBarUser () {
                 />
               </ListItemButton>
             </ListItem>
-          </Link>
+          // </Link>
           )}
 
           <Link
-            href="/user/account/edit"
+            href="/user/account/edit" passHref
             style={{ textDecoration: "none", color: "black" }}
           >
             <ListItem disablePadding>

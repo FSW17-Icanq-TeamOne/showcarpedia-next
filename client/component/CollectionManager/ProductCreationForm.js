@@ -20,10 +20,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Close } from "@mui/icons-material";
 
 export default function ProductCreationForm() {
-  const getUrls = (url) => formik.setFieldValue("photoProducts", url);
   const data = useSelector(state => state.carMake)
-  const [isOpen,setIsOpen] = useState(false)
   const dispatch = useDispatch()
+  const getUrls = (url) => formik.setFieldValue("photoProducts", url);
+  const [isOpen,setIsOpen] = useState(false)
   const router = useRouter()
   const handleClose = () => setIsOpen(false)
   const action = (
@@ -48,6 +48,9 @@ export default function ProductCreationForm() {
       if(!router.isReady) return
       fetchData();
     }, [router.isReady]);
+
+ 
+
 
   const formik = useFormik({
     initialValues: {
