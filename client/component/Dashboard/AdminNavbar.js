@@ -14,13 +14,41 @@ import {
     Link,
 } from "@mui/material";
 import { Menu as MenuIcon, DirectionsCar } from "@mui/icons-material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import {AdminSidebar} from './DashboardSidebarAdmin';
 
 export default function AdminNavbar () {
-    const [cookie, setCookie, removeCookir] = useCookies('access_token');
+    const [cookie, setCookie, removeCookie] = useCookies('access_token');
     const [isToggle, setIsToggle] = useState(true);
+    const [avatar, setAvatar] = useState("https://media.discordapp.net/attachments/960564590574456852/965225077069193326/jhondoe.jpg?width=559&height=559")
+    
+    const removeAccessToken = () => {
+        window.localStorage.clear();
+        removeCookie('access_token');
+    };
+
+    useEffect(() => {
+        fetch("http://localhost:3001/v1/user/profile/", {
+            credentials: "include",
+        })
+            .then((data) => data.json())
+            .then((data) => {
+                if(data.profilePicture !== null){
+                    setAvatar(data.profilePicture)
+                }
+                })
+            .catch((err) => console.log(err));
+        }, []);
+
+    useEffect(() => {
+        fetch("http://localhost:3001/v1/user/account/", {
+            credentials: "include",
+        })
+            .then((data) => data.json())
+            .then((data) => setaccountData(data))
+            .catch((err) => console.log(err));
+        }, []);
 
     const handleToggle = () => {
         setIsToggle((prev) => !prev);
@@ -99,7 +127,7 @@ export default function AdminNavbar () {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title='Open Settings'>
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt='Remy Sharp' src='' />
+                                    <Avatar alt='UserAvatar' src={avatar} />
                                 </IconButton>
                             </Tooltip>
 
@@ -119,10 +147,17 @@ export default function AdminNavbar () {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                <MenuItem onClick={handleCloseUserMenu}>
+                                <MenuItem onClick={ () => {
+                                    window.location.assign('/user/profile/edit');
+                                    handleCloseUserMenu;  
+                                    } }>
                                     <Typography textAlign='center'>Profile</Typography>
                                 </MenuItem>
-                                <MenuItem onClick={handleCloseUserMenu}>
+                                <MenuItem onClick={ () => {
+                                    removeAccessToken();
+                                    window.location.assign('/login');
+                                    handleCloseUserMenu;  
+                                    } }>
                                     <Typography textAlign='center'>Sign Out</Typography>
                                 </MenuItem>
                             </Menu>

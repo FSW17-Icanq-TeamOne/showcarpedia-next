@@ -10,10 +10,26 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import PreviewImages from "./PreviewImages";
-import { brands, grades, categories } from "../../utils/carMake";
+import { useRouter } from "next/router";
+import { fetchCarMakeData } from "../../redux/slices/carMakeSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 export default function ProductCreationForm() {
+  const data = useSelector(state => state.carMake)
+  const dispatch = useDispatch()
+  const router = useRouter()
   const getUrls = (url) => formik.setFieldValue("photoProducts", url);
+
+  const fetchData = async () => {
+    await dispatch(fetchCarMakeData())
+ };
+
+ useEffect(() => {
+   if(!router.isReady) return
+   fetchData();
+ }, [router.isReady]);
+
 
   const formik = useFormik({
     initialValues: {
@@ -41,6 +57,7 @@ export default function ProductCreationForm() {
         console.log(response)
         if (response.ok) {
           console.log("ok");
+          router.push("/admin/collection/lists")
         } else {
           console.log("tidak ok");
         }
@@ -88,7 +105,7 @@ export default function ProductCreationForm() {
                       formik.setFieldValue("brand", e.target.value)
                     }
                   >
-                    {brands.map((e, i) => (
+                    {data.brands?.map((e, i) => (
                       <MenuItem value={e} key={i}>
                         {e}
                       </MenuItem>
@@ -108,7 +125,7 @@ export default function ProductCreationForm() {
                       formik.setFieldValue("grade", e.target.value)
                     }
                   >
-                    {grades.map((e, idx) => (
+                    {data.grades?.map((e, idx) => (
                       <MenuItem value={e} key={idx}>
                         {e}
                       </MenuItem>
@@ -128,7 +145,7 @@ export default function ProductCreationForm() {
                       formik.setFieldValue("category", e.target.value)
                     }
                   >
-                    {categories.map((e, i) => (
+                    {data.categories?.map((e, i) => (
                       <MenuItem value={e} key={i}>
                         {e}
                       </MenuItem>

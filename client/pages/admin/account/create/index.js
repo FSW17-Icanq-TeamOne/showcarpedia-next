@@ -2,7 +2,7 @@ import { Button, Grid, TextField, Typography, Box } from "@mui/material";
 import { useFormik } from "formik";
 import { useRouter } from 'next/router';
 import React from "react";
-import AdminNavbar from '../../../../component/Dashboard/AdminNavbar';
+import DashboardAdmin from '../../../../component/Dashboard/DashboardAdmin';
 
 export default function CreateAdmin () {
     const router = useRouter();
@@ -22,7 +22,7 @@ export default function CreateAdmin () {
 
     return (
         <Grid container>
-        <AdminNavbar />
+        <DashboardAdmin />
         <Grid item xs>
           <Grid container spacing={2}>
             <Grid item sm={1} lg={2} />

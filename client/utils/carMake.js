@@ -13,7 +13,7 @@ const fetchData = async () => {
       credentials: "include",
     });
     const data = await response.json();
-    years = data.year.map((e) => e.year)
+    // years = data.year.map((e) => e.year)
     brands = data.brand.sort()
     categories = data.category.sort()
   };
