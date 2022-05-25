@@ -23,7 +23,8 @@ export default function Home() {
       {/* About Us */}
       <Grid
           container
-          height={400}
+          height="100%"
+          minHeight={400}
           alignItems='center'
           spacing={3}
           justifyContent={'center'}
