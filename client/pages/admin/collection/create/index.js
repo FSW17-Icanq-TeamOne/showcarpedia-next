@@ -4,6 +4,7 @@ import React from "react";
 import DashboardAdmin from "../../../../component/Dashboard/DashboardAdmin";
 import ProductCreationForm from "../../../../component/CollectionManager/ProductCreationForm"
 
+
 export default function CollectionManagerCreate() {
     return (
         <Grid container>

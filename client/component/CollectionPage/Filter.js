@@ -34,7 +34,7 @@ const router = useRouter()
       maxMileages: "",
       grades: "",
     },
-    onSubmit: async (values) => {
+    onSubmit:  (values) => {
       const year = Number(values.minYear);
       const grade = Number(values.grades);
       const mileages = Number(values.maxMileages);

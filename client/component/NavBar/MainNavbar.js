@@ -1,4 +1,4 @@
-import { Grid, IconButton, Typography } from '@mui/material';
+import { Fade, Grid, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Typography } from '@mui/material';
 import { useEffect, useState, useContext } from 'react'
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
@@ -13,17 +13,26 @@ import {SocketContext} from '../../context/socketContext'
 
 import styles from '../../styles/HomePage.module.css';
 import { useRouter } from 'next/router';
+import { DirectionsCar, Favorite, Home, Logout, Person, Settings } from '@mui/icons-material';
 
 export default function MainNavbar () {
     const [cookie, setCookie, removeCookie] = useCookies(['access_token']);
     const [role, setRole] = useState(null);
+    const [isToggle, setIsToggle] = useState(false);
     const {room, setRoom} = useContext(MainContext)
     const socket = useContext(SocketContext)
     const router = useRouter()
     const removeAccessToken = () => {
         window.localStorage.clear();
         removeCookie('access_token');
+        router.push("/login")
     };
+    const handleToggle = () => setIsToggle((prev) => !prev);
+
+    useEffect(() => {
+        isToggle?document.body.style.overflow="hidden":document.body.style.overflow="unset"
+      }, [isToggle]);
+
 
     useEffect(() => {
         const getRole = localStorage.getItem('role');
@@ -48,6 +57,7 @@ export default function MainNavbar () {
    }
 
     return (
+        <>
         <Grid
             container
             columns={{ xs: 2, sm: 8, md: 12}}
@@ -84,7 +94,7 @@ export default function MainNavbar () {
                     </Grid>
 
                     <Grid item>
-                        <Link href={'/collection'}>
+                        <Link href={'/collection'} passHref>
                             <Typography className={styles.Link} 
                                 sx={{
                                     fontSize: '18px'
@@ -201,10 +211,10 @@ export default function MainNavbar () {
                     <input 
                         className={styles.hamburgerButton}
                         type='checkbox'
-                        onClick={() => console.log(1)}
-                        id='nav-menu'
+                        onClick={handleToggle}
+                        id={styles.navMenu}
                     />
-                    <label htmlFor='nav-menu' id='nav-icon'>
+                    <label htmlFor={styles.navMenu} id={styles.navIcon}>
                         <span />
                         <span />
                         <span />
@@ -212,5 +222,85 @@ export default function MainNavbar () {
                 </>
             </Grid>
         </Grid>
+        <Fade in={isToggle}>
+        <Paper
+          elevation={2}
+          sx={{
+            zIndex: 2,
+            position:"absolute",
+            top:"64px",
+            width: "100%",
+            height:"100vh"
+          }}
+        >
+          <List>
+            <ListItem>
+            <Link href="/" passHref>
+              <ListItemButton>
+                <ListItemIcon>
+                  <Home />
+                </ListItemIcon>
+                <ListItemText primary="home" />
+              </ListItemButton>
+            </Link>
+            </ListItem>
+
+            <ListItem>
+            <Link href="/collection" passHref>
+              <ListItemButton >
+                <ListItemIcon>
+                  <DirectionsCar />
+                </ListItemIcon>
+                <ListItemText primary="collection" />
+              </ListItemButton>
+            </Link>
+            </ListItem>
+
+            <ListItem>
+            <Link href="/wishlist" passHref>
+              <ListItemButton  >
+                <ListItemIcon>
+                  <Favorite />
+                </ListItemIcon>
+                <ListItemText primary="wishlist" />
+              </ListItemButton>
+            
+            </Link>
+            </ListItem>
+
+            <ListItem>
+            <Link href="/admin/manager/lists" passHref>
+              <ListItemButton  >
+                <ListItemIcon>
+                  <Settings />
+                </ListItemIcon>
+                <ListItemText primary="setting" />
+              </ListItemButton>
+              </Link>
+            </ListItem>
+
+            <ListItem>
+            <Link href="user/profile/edit" passHref>
+              <ListItemButton  >
+                <ListItemIcon>
+                  <Person />
+                </ListItemIcon>
+                <ListItemText primary="profile" />
+              </ListItemButton>
+              </Link>
+            </ListItem>
+
+            <ListItem>
+              <ListItemButton onClick={removeAccessToken}>
+                <ListItemIcon>
+                  <Logout />
+                </ListItemIcon>
+                <ListItemText primary="Log out" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Paper>
+      </Fade>
+      </>
     );
 };

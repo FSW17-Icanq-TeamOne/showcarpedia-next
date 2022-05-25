@@ -5,7 +5,7 @@
   font-family: 'Source Sans Pro', sans-serif;
 }
 
-#nav-icon span{
+#navIcon span{
   display: block;
   margin:4px;
   height: 5px;
@@ -13,16 +13,16 @@
   background: #353232;
   border-radius:9px;
 }
-#nav-menu:checked ~ #nav-icon span:nth-child(1){
+#navMenu:checked ~ #navIcon span:nth-child(1){
   -webkit-transform: rotate(135deg) translate(13px,-10px);
   -moz-transform: rotate(135deg) translate(13px,-10px);
   -o-transform: rotate(135deg) translate(13px,-10px);
   transform: rotate(135deg) translate(13px,-10px);
 }
-#nav-menu:checked ~ #nav-icon span:nth-child(2){
+#navMenu:checked ~ #navIcon span:nth-child(2){
    opacity: 0;
 }
-#nav-menu:checked ~ #nav-icon span:nth-child(3){
+#navMenu:checked ~ #navIcon span:nth-child(3){
   -webkit-transform: rotate(-135deg) translate(3px);
   -moz-transform: rotate(-135deg) translate(3px);
   -o-transform: rotate(-135deg) translate(3px);
@@ -33,7 +33,7 @@
   display:none;
 }
 
-#nav-icon span{  
+#navIcon span{  
   cursor:pointer; 
   -webkit-transition: .25s ease-in-out;
   -moz-transition: .25s ease-in-out;
@@ -41,17 +41,17 @@
   transition: .25s ease-in-out;
 }
 
-#nav-icon span{
+#navIcon span{
   position:relative;
   left:0px;
 }
 
-#nav-menu:checked ~ #nav-icon span:nth-child(2){
+#navMenu:checked ~ #navIcon span:nth-child(2){
   opacity: 0;
   left: 60px;
 }
 
-#nav-menu:checked ~ #nav-icon{
+#navMenu:checked ~ #navIcon{
   margin-bottom:10px;
 }
 

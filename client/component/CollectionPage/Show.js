@@ -99,7 +99,7 @@ useEffect(() => {
                 alignItems={"center"}
               >
                     
-                <Typography marginLeft={2} fontWeight="bold" fontSize={"2em"} >{data?.title}</Typography>
+                <Typography marginLeft={2} fontWeight="bold" fontSize={"1.5em"} >{data?.title}</Typography>
                 <IconButton onClick={handleWishlist}>
                   {isWishlist ? (
                     <FavoriteOutlined sx={{ color: "red", transition: ".5s" }} />

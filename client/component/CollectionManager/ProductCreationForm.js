@@ -7,13 +7,47 @@ import {
   Grid,
   TextField,
   TextareaAutosize,
+  Snackbar,
+  IconButton,
+  SnackbarContent,
 } from "@mui/material";
 import { useFormik } from "formik";
+import React,{ useEffect, useState } from "react";
+import { fetchCarMakeData } from "../../redux/slices/carMakeSlice";
 import PreviewImages from "./PreviewImages";
-import { brands, grades, categories } from "../../utils/carMake";
+import {useRouter} from "next/router"
+import { useDispatch, useSelector } from "react-redux";
+import { Close } from "@mui/icons-material";
 
 export default function ProductCreationForm() {
   const getUrls = (url) => formik.setFieldValue("photoProducts", url);
+  const data = useSelector(state => state.carMake)
+  const [isOpen,setIsOpen] = useState(false)
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const handleClose = () => setIsOpen(false)
+  const action = (
+    <React.Fragment>
+    
+       <IconButton
+      size="small"
+      aria-label="close"
+      color="inherit"
+      onClick={handleClose}
+    >
+      <Close fontSize="small" />
+    </IconButton>
+    </React.Fragment>
+    )
+  
+    const fetchData = async () => {
+       await dispatch(fetchCarMakeData())
+    };
+  
+    useEffect(() => {
+      if(!router.isReady) return
+      fetchData();
+    }, [router.isReady]);
 
   const formik = useFormik({
     initialValues: {
@@ -27,20 +61,20 @@ export default function ProductCreationForm() {
       photoProducts: "",
     },
     onSubmit: async (value) => {
-      console.log(value);
       try {
         const response = await fetch("http://localhost:3001/v1/cars", {
           method: "POST",
           headers: {
             Accept: "application/json",
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
           },
           credentials: "include",
           body: JSON.stringify(value),
         });
-        console.log(response)
+        console.log(await response.json())
         if (response.ok) {
-          console.log("ok");
+          setIsOpen(true)  
+          router.push("/admin/collection/lists")
         } else {
           console.log("tidak ok");
         }
@@ -88,11 +122,12 @@ export default function ProductCreationForm() {
                       formik.setFieldValue("brand", e.target.value)
                     }
                   >
-                    {brands.map((e, i) => (
-                      <MenuItem value={e} key={i}>
-                        {e}
-                      </MenuItem>
-                    ))}
+                    <MenuItem value="">Brand</MenuItem>
+                {data.brands?.map((e, i) => (
+                  <MenuItem value={e} key={i}>
+                    {e}
+                  </MenuItem>
+                ))}
                   </Select>
                 </FormControl>
               </Grid>
@@ -108,11 +143,12 @@ export default function ProductCreationForm() {
                       formik.setFieldValue("grade", e.target.value)
                     }
                   >
-                    {grades.map((e, idx) => (
-                      <MenuItem value={e} key={idx}>
-                        {e}
-                      </MenuItem>
-                    ))}
+                    <MenuItem value="">Grades</MenuItem>
+                {data?.grades.map((e, i) => (
+                  <MenuItem value={e} key={i}>
+                    {e}
+                  </MenuItem>
+                ))}
                   </Select>
                 </FormControl>
               </Grid>
@@ -128,11 +164,12 @@ export default function ProductCreationForm() {
                       formik.setFieldValue("category", e.target.value)
                     }
                   >
-                    {categories.map((e, i) => (
-                      <MenuItem value={e} key={i}>
-                        {e}
-                      </MenuItem>
-                    ))}
+                   <MenuItem value="">Category</MenuItem>
+                {data?.categories.map((e, i) => (
+                  <MenuItem value={e} key={i}>
+                    {e}
+                  </MenuItem>
+                ))}
                   </Select>
                 </FormControl>
               </Grid>
@@ -192,6 +229,9 @@ export default function ProductCreationForm() {
         <Grid item sm={1} lg={2}>
         </Grid>
       </Grid>
+      <Snackbar  open={isOpen}  onClose={handleClose} autoHideDuration={3000} action={action} anchorOrigin={{vertical:"top",horizontal:"right"}}>
+      <SnackbarContent sx={{backgroundColor:"#4E9A51"}} message="success add productt" action={action}/>
+      </Snackbar>
     </>
   );
 }
