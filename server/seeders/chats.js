@@ -13,15 +13,15 @@ module.exports = {
     */
     await queryInterface.bulkInsert("Chats", [
       {
-        UserId: 6,
-        RoomId: 3,
+        UserId: 3,
+        RoomId: 1,
         Chat: "Hi Admin, Saya Caca Mau Bertanya Mmengenai Mobil Pajero 2022",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        UserId: 6,
-        RoomId: 3,
+        UserId: 1,
+        RoomId: 1,
         Chat: "Hi Caca, Terimakasih Atas Ketertarikannya, Apa yang Ingin Ditanyakan?",
         createdAt: new Date(),
         updatedAt: new Date()
