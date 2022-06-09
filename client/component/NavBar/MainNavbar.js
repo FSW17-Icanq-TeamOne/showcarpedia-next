@@ -39,6 +39,20 @@ export default function MainNavbar () {
         setRole(getRole)
     }, [])
 
+    const [webData, setwebData] = useState({
+        title: "",
+        content: "",
+      });
+    
+      useEffect(() => {
+        fetch(`http://localhost:3001/v1/about`, {
+          credentials: "include",
+        })
+          .then((data) => data.json())
+          .then((data) => setwebData(data))
+          .catch((err) => console.log(err));
+      },[])
+
     useEffect(() => {
         fetch('http://localhost:3001/v1/chat/room/', {
             credentials: "include",
@@ -69,7 +83,7 @@ export default function MainNavbar () {
             {/* Start Bar */}
             <Grid item sm ml={2}>
                 <Link href='/'>
-                <Typography variant={'h5'} className={styles.Link}>Showcarpedia</Typography>
+                <Typography variant={'h5'} className={styles.Link}>{webData?.title}</Typography>
                 </Link>
             </Grid>
 

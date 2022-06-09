@@ -108,7 +108,7 @@ function DashboardSidebarAdmin() {
           </Link>
         )}
 
-        <Link href="/admin/settings" style={{ textDecoration: "none", color: "black" }}>
+        <Link href="/admin/web/settings" style={{ textDecoration: "none", color: "black" }}>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>

@@ -1,9 +1,22 @@
 import { Grid, Typography } from "@mui/material";
 import Link from 'next/link';
-
+import React, { useState, useEffect } from "react";
 import styles from '../../styles/Login+Register.module.css';
 
 export default function SecondNavbar () {
+    const [webData, setwebData] = useState({
+        title: "",
+        content: "",
+      });
+    
+      useEffect(() => {
+        fetch(`http://localhost:3001/v1/about`, {
+          credentials: "include",
+        })
+          .then((data) => data.json())
+          .then((data) => setwebData(data))
+          .catch((err) => console.log(err));
+      },[])
     return (
         <nav>
             <Grid
@@ -17,7 +30,7 @@ export default function SecondNavbar () {
                     mr={'auto'}
                     variant={'h5'}
                 >
-                    Showcarpedia
+                    {webData?.title}
                 </Typography>
 
                 <Grid

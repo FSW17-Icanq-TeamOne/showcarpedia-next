@@ -26,7 +26,20 @@ export default function UserNavbar() {
     "https://media.discordapp.net/attachments/960564590574456852/965225077069193326/jhondoe.jpg?width=559&height=559"
   );
   const [name, setName] = useState("");
+  const [webData, setwebData] = useState({
+    title: "",
+    content: "",
+  });
 
+  useEffect(() => {
+    fetch(`http://localhost:3001/v1/about`, {
+      credentials: "include",
+    })
+      .then((data) => data.json())
+      .then((data) => setwebData(data))
+      .catch((err) => console.log(err));
+  },[])
+  
   const removeAccessToken = () => {
     window.localStorage.clear();
     removeCookie("access_token");
@@ -104,7 +117,7 @@ export default function UserNavbar() {
                   textDecoration: "none",
                 }}
               >
-                SHOWCARPEDIA
+                {webData?.title.toUpperCase()}
               </Typography>
             </Link>
 
@@ -128,7 +141,7 @@ export default function UserNavbar() {
                   textDecoration: "none",
                 }}
               >
-                SHOWCARPEDIA
+                {webData?.title.toUpperCase()}
               </Typography>
             </Link>
 
