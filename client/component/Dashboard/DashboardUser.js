@@ -25,6 +25,20 @@ export default function Dashboard() {
     setIsToggle((prev) => !prev);
   };
 
+  const [webData, setwebData] = useState({
+    title: "",
+    content: "",
+  });
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/v1/about`, {
+      credentials: "include",
+    })
+      .then((data) => data.json())
+      .then((data) => setwebData(data))
+      .catch((err) => console.log(err));
+  },[])
+
   const [anchorElUser, setAnchorElUser] = useState(null);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -67,7 +81,7 @@ export default function Dashboard() {
                   textDecoration: "none",
                 }}
               >
-                SHOWCARPEDIA
+                {webData?.title.toUpperCase()}
               </Typography>
             </Link>
 
@@ -91,7 +105,7 @@ export default function Dashboard() {
                   textDecoration: "none",
                 }}
               >
-                SHOWCARPEDIA
+                {webData?.title.toUpperCase()}
               </Typography>
             </Link>
 

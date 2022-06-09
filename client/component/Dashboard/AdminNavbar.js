@@ -22,7 +22,20 @@ export default function AdminNavbar () {
     const [cookie, setCookie, removeCookie] = useCookies('access_token');
     const [isToggle, setIsToggle] = useState(true);
     const [avatar, setAvatar] = useState("https://media.discordapp.net/attachments/960564590574456852/965225077069193326/jhondoe.jpg?width=559&height=559")
+    const [webData, setwebData] = useState({
+        title: "",
+        content: "",
+      });
     
+      useEffect(() => {
+        fetch(`http://localhost:3001/v1/about`, {
+          credentials: "include",
+        })
+          .then((data) => data.json())
+          .then((data) => setwebData(data))
+          .catch((err) => console.log(err));
+      },[])
+
     const removeAccessToken = () => {
         window.localStorage.clear();
         removeCookie('access_token');
@@ -98,7 +111,7 @@ export default function AdminNavbar () {
                                     textDecoration: 'none'
                                 }}
                             >
-                                SHOWCARPEDIA
+                                {webData?.title.toUpperCase()}
                             </Typography>
                         </Link>
                         <DirectionsCar 
@@ -120,7 +133,7 @@ export default function AdminNavbar () {
                                     textDecoration: 'none'
                                 }}
                             >
-                                SHOWCARPEDIA
+                                {webData?.title.toUpperCase()}
                             </Typography>
                         </Link>
 

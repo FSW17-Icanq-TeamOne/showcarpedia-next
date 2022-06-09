@@ -3,11 +3,27 @@ import BrandList from "../component/HomePage/BrandList";
 import CarouselContainer from "../component/HomePage/Carousel";
 import Footer from "../component/HomePage/Footer";
 import MainNavbar from "../component/NavBar/MainNavbar";
+import React, { useState, useEffect } from "react";
 
 import styles from '../styles/HomePage.module.css';
 
 
 export default function Home() {
+
+  const [webData, setwebData] = useState({
+    title: "",
+    content: "",
+  });
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/v1/about`, {
+      credentials: "include",
+    })
+      .then((data) => data.json())
+      .then((data) => setwebData(data))
+      .catch((err) => console.log(err));
+  },[])
+
   return (
     <Grid className={styles.main}
       sx={{
@@ -51,7 +67,7 @@ export default function Home() {
                   </Typography>
       
                   <Typography mb={3}>
-                      "Showcarpedia is a Car Showroom Website, created by TeamOne FSW17 Binar Academy"
+                      {webData?.content}
                   </Typography>
       
                   <Button
