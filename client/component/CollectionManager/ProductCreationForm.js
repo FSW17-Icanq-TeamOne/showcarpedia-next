@@ -49,9 +49,6 @@ export default function ProductCreationForm() {
       fetchData();
     }, [router.isReady]);
 
- 
-
-
   const formik = useFormik({
     initialValues: {
       title: "",

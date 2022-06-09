@@ -23,6 +23,7 @@
     "firebase": "^9.8.1",
     "formik": "^2.2.9",
     "js-cookie": "^3.0.1",
+    "jspdf": "^2.5.1",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-bootstrap": "^2.4.0",
