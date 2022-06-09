@@ -2,6 +2,11 @@ import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { Button, Grid } from "@mui/material";
 import { Typography } from "@mui/material";
+import jsPDF from "jspdf"
+import { useRouter } from "next/router";
+import {useDispatch, useSelector} from "react-redux"
+import { fetchCollectionDataById } from "../../redux/slices/collectionsSlice";
+
 
 const columns = [
   { field: "id", headerName: "ID", flex: 1 },
@@ -24,6 +29,24 @@ const columns = [
           href={`/admin/collection/edit/${cellValues.getValue(cellValues.id, "id")}`}
         >
           Edit
+        </Button>
+      );
+    },
+    flex: 1
+  },
+  {
+    field: "#pdf",
+    headerName: "",
+    renderCell: (cellValues) => {
+      return (
+        <Button
+          variant="contained"
+          color="warning"
+          size="small"
+          style={{ textDecoration: "none", color: "white" }}
+          href={`/pdf/collection/${cellValues.getValue(cellValues.id, "id")}`}
+        >
+          PDF
         </Button>
       );
     },
