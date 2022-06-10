@@ -42,6 +42,7 @@ export default function AdminManagerEdit() {
           console.log(data, "This is the Data");
           if (data.message === "Success") {
             Router.push("/admin/web/settings");
+            window.location.reload();
           }
         })
         .catch((err) => {
