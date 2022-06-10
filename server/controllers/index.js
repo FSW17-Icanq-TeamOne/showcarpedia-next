@@ -3,5 +3,6 @@ module.exports = {
     AboutController: require("./aboutController"),
     ProductController: require("./productController"),
     UserController: require("./userController"),
-    chatController: require("./chatController")
+    chatController: require("./chatController"),
+    InsightsController: require("./insightsController")
 }
