@@ -4,6 +4,10 @@ import React, { useState, useEffect } from "react";
 import DashboardAdmin from "../../../component/Dashboard/DashboardAdmin";
 import Router from "next/router"
 import TopFiveWishlitsTable from '../../../component/Insights/TopFiveWishlists';
+import AdminPanelSettingsSharpIcon from '@mui/icons-material/AdminPanelSettingsSharp';
+import PersonSharpIcon from '@mui/icons-material/PersonSharp';
+import DirectionsCarFilledSharpIcon from '@mui/icons-material/DirectionsCarFilledSharp';
+
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -50,14 +54,23 @@ export default function AdminInsights() {
             <DashboardAdmin />
             <Grid item xs sx={{ml: 10, mr: 10, mt: 5}}>
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-            <Grid item xs={2} sm={4} md={4} >
-                <Item>Total Users: {totalUsers?.usersTotal}</Item>
+            <Grid item xs={2} sm={4} md={4} gap='5px'>
+                <Item>
+                    <PersonSharpIcon />
+                    Total Users: {totalUsers?.usersTotal}
+                </Item>
             </Grid>
-            <Grid item xs={2} sm={4} md={4} >
-                <Item>Total Admin: {totalAdmins?.adminsTotal}</Item>
+            <Grid item xs={2} sm={4} md={4} gap='5px'>
+                <Item>
+                    <AdminPanelSettingsSharpIcon />
+                    Total Admin: {totalAdmins?.adminsTotal}
+                </Item>
             </Grid>
-            <Grid item xs={2} sm={4} md={4} >
-                <Item>Total Collection: {totalCollections?.collectionsTotal}</Item>
+            <Grid item xs={2} sm={4} md={4} gap='5px'>
+                <Item>
+                    <DirectionsCarFilledSharpIcon />
+                    Total Collection: {totalCollections?.collectionsTotal}
+                </Item>
             </Grid>
             <Grid item xs={2} sm={12} md={12} >
             <TopFiveWishlitsTable />
