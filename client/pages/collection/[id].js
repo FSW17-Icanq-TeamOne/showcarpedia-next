@@ -10,9 +10,12 @@ export default function DetailProduct() {
   const data = useSelector((state) => state.collections)
   const router = useRouter()
   const {id} = router.query
+  const dispatch = useDispatch()
+  
   const loadData = async () => {
     await dispatch(fetchCollectionDataById(id))
   }
+  
 
   useEffect(() => {
     if (!router.isReady) return
