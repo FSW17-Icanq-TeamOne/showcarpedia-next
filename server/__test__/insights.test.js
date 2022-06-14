@@ -5,12 +5,8 @@ const { queryInterface } = sequelize;
 const { hashPassword } = require("../helpers/passwordHandler")
 const { generateToken } = require("../helpers/tokenHandler")
 
-let username;
 let access_token;
 let userRole;
-
-let webSettings_title = "Cemanapedia";
-let webSettings_content = "Cemanapedia is TEAM ONE Web Product";
 
 beforeAll(async (done) => {
     const user = [
