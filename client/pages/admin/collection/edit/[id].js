@@ -1,13 +1,13 @@
-import { Box, Grid, Typography } from "@mui/material";
-import DashboardAdmin from "../../../../component/Dashboard/DashboardAdmin";
-import ProductUpdateForm from "../../../../component/CollectionManager/ProductUpdateForm";
+import {Box, Grid, Typography} from "@mui/material"
+import DashboardAdmin from "../../../../component/Dashboard/DashboardAdmin"
+import ProductUpdateForm from "../../../../component/CollectionManager/ProductUpdateForm"
 
 export default function CollectionManagerEdit() {
   return (
     <Grid container>
       <DashboardAdmin />
       <Grid item xs>
-        <Box sx={{ minHeight: "calc(100vh - 64px)", m: 2 }}>
+        <Box sx={{minHeight: "calc(100vh - 64px)", m: 2}}>
           <Grid
             container
             display={"flex"}
@@ -22,5 +22,5 @@ export default function CollectionManagerEdit() {
         </Box>
       </Grid>
     </Grid>
-  );
+  )
 }

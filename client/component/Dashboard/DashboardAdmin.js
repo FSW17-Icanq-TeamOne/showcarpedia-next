@@ -12,24 +12,24 @@ import {
   MenuItem,
   Menu,
   Link,
-} from "@mui/material";
-import { Menu as MenuIcon, DirectionsCar } from "@mui/icons-material";
-import { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
-import { AdminSidebar } from "./DashboardSidebarAdmin";
+} from "@mui/material"
+import {Menu as MenuIcon, DirectionsCar} from "@mui/icons-material"
+import {useState, useEffect} from "react"
+import {useCookies} from "react-cookie"
+import {AdminSidebar} from "./DashboardSidebarAdmin"
 
 export default function Dashboard() {
-  const [cookie, setCookie, removeCookie] = useCookies("access_token");
-  const [istoggle, setIsToggle] = useState(true);
-  const [role, setRole] = useState(null);
+  const [cookie, setCookie, removeCookie] = useCookies("access_token")
+  const [istoggle, setIsToggle] = useState(true)
+  const [role, setRole] = useState(null)
   const [avatar, setAvatar] = useState(
     "https://media.discordapp.net/attachments/960564590574456852/965225077069193326/jhondoe.jpg?width=559&height=559"
-  );
-  const [name, setName] = useState("");
+  )
+  const [name, setName] = useState("")
   const [webData, setwebData] = useState({
     title: "",
     content: "",
-  });
+  })
 
   useEffect(() => {
     fetch(`http://localhost:3001/v1/about`, {
@@ -37,18 +37,18 @@ export default function Dashboard() {
     })
       .then((data) => data.json())
       .then((data) => setwebData(data))
-      .catch((err) => console.log(err));
-  },[])
+      .catch((err) => console.log(err))
+  }, [])
 
   const removeAccessToken = () => {
-    window.localStorage.clear();
-    removeCookie("access_token");
-  };
+    window.localStorage.clear()
+    removeCookie("access_token")
+  }
 
   useEffect(() => {
-    const getRole = localStorage.getItem('role');
+    const getRole = localStorage.getItem("role")
     setRole(getRole)
-}, [])
+  }, [])
 
   useEffect(() => {
     fetch("http://localhost:3001/v1/user/profile/", {
@@ -56,34 +56,34 @@ export default function Dashboard() {
     })
       .then((data) => data.json())
       .then((data) => {
-        setName(data.fullName);
+        setName(data.fullName)
         if (data.profilePicture !== null) {
-          setAvatar(data.profilePicture);
+          setAvatar(data.profilePicture)
         } else {
           setAvatar(
             "https://media.discordapp.net/attachments/960564590574456852/965225077069193326/jhondoe.jpg?width=559&height=559"
-          );
+          )
         }
       })
-      .catch((err) => console.log(err));
-  }, []);
+      .catch((err) => console.log(err))
+  }, [])
 
   const handleToggle = () => {
-    setIsToggle((prev) => !prev);
-  };
+    setIsToggle((prev) => !prev)
+  }
 
-  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(null)
   const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+    setAnchorElUser(event.currentTarget)
+  }
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+    setAnchorElUser(null)
+  }
 
-  const settings = ["Profile", "Account", "Dashboard", "Logout"];
+  const settings = ["Profile", "Account", "Dashboard", "Logout"]
   return (
     <>
-      <AppBar position="static" sx={{ bgcolor: "orange" }} elevation={0}>
+      <AppBar position="static" sx={{bgcolor: "orange"}} elevation={0}>
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <IconButton
@@ -92,21 +92,19 @@ export default function Dashboard() {
               edge="start"
               color="inherit"
               aria-label="menu"
-              sx={{ mr: 2 }}
+              sx={{mr: 2}}
             >
               <MenuIcon />
             </IconButton>
 
             {/* Desktop Mode */}
-            <DirectionsCar
-              sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
-            />
-            <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
+            <DirectionsCar sx={{display: {xs: "none", md: "flex"}, mr: 1}} />
+            <Link href="/" style={{textDecoration: "none", color: "inherit"}}>
               <Typography
                 sx={{
                   flexGrow: 1,
                   mr: 2,
-                  display: { xs: "none", md: "flex" },
+                  display: {xs: "none", md: "flex"},
                   fontStyle: "normal",
                   fontWeight: "bold",
                   letterSpacing: ".3rem",
@@ -114,48 +112,44 @@ export default function Dashboard() {
                   textDecoration: "none",
                 }}
               >
-                {webData?.title.toUpperCase()}
+                {webData?.title}
               </Typography>
             </Link>
 
             {/* Mobile Mode */}
-            <DirectionsCar
-              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-            />
+            <DirectionsCar sx={{display: {xs: "flex", md: "none"}, mr: 1}} />
             <Link
               href="/"
-              style={{ textDecoration: "none", color: "inherit" }}
-              sx={{ flexGrow: 1 }}
+              style={{textDecoration: "none", color: "inherit"}}
+              sx={{flexGrow: 1}}
             >
               <Typography
                 sx={{
                   mr: 2,
-                  display: { xs: "flex", md: "none" },
+                  display: {xs: "flex", md: "none"},
                   fontStyle: "normal",
                   fontWeight: "bold",
                   letterSpacing: ".3rem",
                   color: "inherit",
                   textDecoration: "none",
+                  textTransform: "uppercase",
                 }}
               >
-                {webData?.title.toUpperCase()}
+                {webData?.title}
               </Typography>
             </Link>
 
-            <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{flexGrow: 0}}>
               <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Typography
-                    mr={2}
-                    sx={{ color: "white", fontWeight: "bold" }}
-                  >
+                <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
+                  <Typography mr={2} sx={{color: "white", fontWeight: "bold"}}>
                     {name}
                   </Typography>
                   <Avatar alt="UserAvatar" src={avatar} />
                 </IconButton>
               </Tooltip>
               <Menu
-                sx={{ mt: "45px" }}
+                sx={{mt: "45px"}}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
@@ -173,8 +167,8 @@ export default function Dashboard() {
                 {(role === "superAdmin" || role === "admin") && (
                   <MenuItem
                     onClick={() => {
-                      window.location.assign("/admin/manager/lists");
-                      handleCloseUserMenu;
+                      window.location.assign("/admin/manager/lists")
+                      handleCloseUserMenu
                     }}
                   >
                     <Typography textAlign="center">Admin Menu</Typography>
@@ -182,17 +176,17 @@ export default function Dashboard() {
                 )}
                 <MenuItem
                   onClick={() => {
-                    window.location.assign("/user/profile/edit");
-                    handleCloseUserMenu;
+                    window.location.assign("/user/profile/edit")
+                    handleCloseUserMenu
                   }}
                 >
                   <Typography textAlign="center">Profile</Typography>
                 </MenuItem>
                 <MenuItem
                   onClick={() => {
-                    removeAccessToken();
-                    window.location.assign("/login");
-                    handleCloseUserMenu;
+                    removeAccessToken()
+                    window.location.assign("/login")
+                    handleCloseUserMenu
                   }}
                 >
                   <Typography textAlign="center">Sign Out</Typography>
@@ -202,11 +196,11 @@ export default function Dashboard() {
           </Toolbar>
         </Container>
       </AppBar>
-      <Grid item xs={2} sx={{ display: istoggle ? "unset" : "none" }}>
+      <Grid item xs={2} sx={{display: istoggle ? "unset" : "none"}}>
         <Grow in={istoggle}>
           <AdminSidebar />
         </Grow>
       </Grid>
     </>
-  );
+  )
 }
