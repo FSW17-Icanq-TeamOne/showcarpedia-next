@@ -22,30 +22,17 @@ var corsOpts = {
 //Socket.IO
 io.on('connection', (socket) => {
     socket.on('login', ({room}) => {
-        console.log('User connected')
         socket.join(room)
     })
 
     socket.on('sendMsg',({name, room, msg}) => {
-        // socket.join(room)
         io.to(room).emit('message', {
             user: name,
             text: msg
         })
-        // callback()
     })
 
-    socket.on('disconnect', () => {
-        console.log('User disconnected')
-        // const user = delUser(socket.id)
-        // if (user) {
-        //     io.to(user.room).emit('notification', 
-        //     {
-        //         title: 'Someone just left',
-        //         description: `${user.name} just left the room`
-        //     })
-        //     io.to(user.room).emit('users', getUsers(user.room))
-        // }
+    socket.on('disconnect', () => {  
     })
 
 })
@@ -65,6 +52,5 @@ app.use(cors(corsOpts))
 //Routes
 app.use(router)
 
-server.listen(PORT, () => {
-    console.log(`Listening on port http://localhost:${PORT}`)
-}) 
+module.exports = app;
+// server.listen(PORT, () => { console.log(`Listening on port http://localhost:${PORT}`)}) 

@@ -1,5 +1,5 @@
 const { User, Product, Wishlist, sequelize } = require("../models")
-const { fn, col } = require("sequelize");
+
 class InsightsController {
 
     static async getTotalUsers(req, res) {

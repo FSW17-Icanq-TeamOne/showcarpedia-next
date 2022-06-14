@@ -9,9 +9,12 @@ class AboutController {
             content: data.content,
           })
         })
-        .catch((err) => {
-          console.log(err)
-        })
+        // .catch((err) => {
+        //   return res.status(501).json({
+        //     message: "Failed",
+        //     error: err
+        //   })
+        // })
   }
 
   static async updateAbout(req, res) {
@@ -28,9 +31,12 @@ class AboutController {
       .then(() => {
         res.status(201).json({message: "Success"})
       })
-      .catch((err) => {
-        console.log(err)
-      })
+      // .catch((err) => {
+      //   return res.status(501).json({
+      //       message: "Failed",
+      //       error: err
+      //     })
+      // })
   }
 }
 
