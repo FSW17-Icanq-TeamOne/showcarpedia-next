@@ -8,7 +8,7 @@ class AdminController {
     const userRole = req.user.role
 
     try {
-      if ( userRole === "superAdmin" || userRolte === "admin" ){
+      if ( userRole === "superAdmin" || userRole === "admin" ){
         const user = await User.findAll({
           where: {
             role: "admin",
