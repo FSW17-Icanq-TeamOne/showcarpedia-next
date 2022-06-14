@@ -6,10 +6,10 @@ import {useDispatch, useSelector} from "react-redux"
 import {useEffect} from "react"
 import {fetchCollectionDataById} from "../../redux/slices/collectionsSlice"
 
-export default function DetailProduct(context) {
-  const {id} = context.params
+export default function DetailProduct() {
   const data = useSelector((state) => state.collections)
-
+  const router = useRouter()
+  const {id} = router.query
   const loadData = async () => {
     await dispatch(fetchCollectionDataById(id))
   }
