@@ -50,7 +50,7 @@ beforeAll(async (done) => {
           if (err) return done(err);
           const { status, body } = res;
           expect(status).toBe(200);
-          expect(body).toHaveProperty("message", "Success")
+          expect(body).toHaveProperty("message", "Success");
           expect(body).toHaveProperty("access_token", expect.any(String));
           expect(body).toHaveProperty("role", "superAdmin");
         //   expect(body).toHaveProperty("id", expect.any(Number));
