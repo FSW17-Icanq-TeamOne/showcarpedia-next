@@ -65,6 +65,5 @@ app.use(cors(corsOpts))
 //Routes
 app.use(router)
 
-server.listen(PORT, () => {
-    console.log(`Listening on port http://localhost:${PORT}`)
-}) 
+module.exports = app;
+// server.listen(PORT, () => { console.log(`Listening on port http://localhost:${PORT}`)}) 
