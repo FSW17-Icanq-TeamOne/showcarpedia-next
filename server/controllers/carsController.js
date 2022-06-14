@@ -1,5 +1,5 @@
-const { Product } = require("../models");
-const { Op } = require("sequelize");
+const {Product} = require("../models")
+const {Op} = require("sequelize")
 class carsController {
   static create = async (req, res) => {
     const {
@@ -11,7 +11,8 @@ class carsController {
       category,
       description,
       photoProducts,
-    } = req.body;
+      videos,
+    } = req.body
     const payloadCars = {
       title,
       brand,
@@ -22,9 +23,10 @@ class carsController {
       description,
       delete: false,
       photoProducts,
-    };
+      videos,
+    }
     try {
-      const cars = await Product.create(payloadCars);
+      const cars = await Product.create(payloadCars)
 
       return res.status(201).json({
         message: "Success",
@@ -36,33 +38,34 @@ class carsController {
         category: cars.category,
         description: cars.description,
         photoProducts: cars.photoProducts,
-      });
+        videos: cars.videos,
+      })
     } catch (error) {
       return res.status(500).json({
         message: error.message,
-      });
+      })
     }
-  };
+  }
 
   static async getAllProduct(req, res) {
     try {
       const data = await Product.findAll({
         order: [["id", "ASC"]],
-        where:{
-          delete: false
-        }
-      });
-      if (!data.length) res.json("please add new product");
-      res.status(200).json(data);
+        where: {
+          delete: false,
+        },
+      })
+      if (!data.length) res.json("please add new product")
+      res.status(200).json(data)
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
   static async getProductById(req, res) {
     try {
-      const { id } = req.params;
-      const data = await Product.findByPk(id);
+      const {id} = req.params
+      const data = await Product.findByPk(id)
       if (data) {
         return res.status(200).json({
           title: data.title,
@@ -73,16 +76,17 @@ class carsController {
           category: data.category,
           description: data.description,
           photoProducts: data.photoProducts,
-        });
+          videos: data.videos,
+        })
       }
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
   static async updateProductById(req, res) {
     try {
-      const { id } = req.params;
+      const {id} = req.params
       const {
         title,
         brand,
@@ -92,7 +96,8 @@ class carsController {
         category,
         description,
         photoProducts,
-      } = req.body;
+        videos,
+      } = req.body
       const updateDataCars = {
         title,
         brand,
@@ -103,91 +108,92 @@ class carsController {
         description,
         delete: false,
         photoProducts,
-      };
+        videos,
+      }
       const data = await Product.update(updateDataCars, {
         where: {
           id: id,
         },
-      });
+      })
       if (data == 1) {
         return res.status(200).json({
           message: "Success",
           data: req.body,
-        });
+        })
       }
     } catch (error) {
-      throw error;
+      throw error
     }
   }
   static async deleteProduct(req, res) {
     try {
-      const { id } = req.params;
+      const {id} = req.params
       const deleteData = {
         delete: true,
-      };
+      }
       const data = await Product.update(deleteData, {
         where: {
           id: id,
         },
-      });
+      })
       if (data == 1) {
         return res.status(200).json({
           message: `Success`,
-        });
+        })
       }
     } catch (error) {
-      throw error;
+      throw error
     }
   }
   static async findFilteredCar(req, res) {
-    const { mileages, brand, title, minYear, grade, category } = req.query;
+    const {mileages, brand, title, minYear, grade, category} = req.query
     const query = {
       brand,
       title,
       category,
-    };
+    }
 
-    const filteredQuery = Object.fromEntries(Object.entries(query).filter(([_, v]) => Boolean(v)));
+    const filteredQuery = Object.fromEntries(
+      Object.entries(query).filter(([_, v]) => Boolean(v))
+    )
     console.log(filteredQuery)
     try {
-        
       const data = await Product.findAll({
-        where:{
+        where: {
           ...filteredQuery,
           kiloMeter: {
-            [Op.lte]: Number(mileages) <= 0 ? 1000000 : Number(mileages) 
+            [Op.lte]: Number(mileages) <= 0 ? 1000000 : Number(mileages),
           },
           year: {
-            [Op.gte]: Number(minYear) 
+            [Op.gte]: Number(minYear),
           },
           grade: {
-            [Op.gte]: Number(grade) 
+            [Op.gte]: Number(grade),
           },
-       }
-      });
-      if (!data.length) return res.status(400).json("data not found");
-     return  res.status(200).json(data);
+        },
+      })
+      if (!data.length) return res.status(400).json("data not found")
+      return res.status(200).json(data)
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
-  static async getFilterData(req,res) {
+  static async getFilterData(req, res) {
     const list = require("list-of-cars")
     list.getListSync()
     const brand = list.getCarMakes()
     const category = list.getCarCategories()
-    try{
+    try {
       const year = await Product.findAll({
-        attributes:["year"],
+        attributes: ["year"],
         group: "year",
-        order:[["year","ASC"]]
+        order: [["year", "ASC"]],
       })
-      if(year) return res.status(200).json({category,brand,year})
-    }
-    catch(err){
+      if (year) return res.status(200).json({category, brand, year})
+    } catch (err) {
       throw err
     }
   }
 }
-module.exports = carsController;
+module.exports = carsController

@@ -250,6 +250,8 @@ export default function ProductCreationForm() {
                                         rel="noopener noreferrer"
                                       >
                                         <Box
+                                          width="100%"
+                                          margin="0"
                                           display="flex"
                                           alignItems="center"
                                           padding={2}
@@ -289,6 +291,7 @@ export default function ProductCreationForm() {
                                             </Typography>
                                           </Box>
                                           <IconButton
+                                            sx={{marginLeft: "auto"}}
                                             aria-label="delete"
                                             onClick={(e) => {
                                               e.stopPropagation()
@@ -309,7 +312,11 @@ export default function ProductCreationForm() {
                                   >
                                     {({field, form, meta}) => (
                                       <Grid item key={index}>
-                                        <Box display={"flex"} gap={1}>
+                                        <Box
+                                          display={"flex"}
+                                          key={index}
+                                          gap={1}
+                                        >
                                           <TextField
                                             name={field.name}
                                             type="Text"
