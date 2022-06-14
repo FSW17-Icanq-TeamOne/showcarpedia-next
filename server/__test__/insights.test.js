@@ -181,7 +181,7 @@ describe("GET /v1/insights/usersTotal", () => {
   });
 
   describe("GET /v1/insights/topWishlists", () => {
-    test("TEST CASE 1: Get Insights of Top Wishlists Data", (done) => {
+    test("TEST CASE 12: Get Insights of Top Wishlists Data", (done) => {
       request(app)
         .get("/v1/insights/topWishlists")
         .set("Cookie", [`access_token=${access_token}`, `role=${userRole}`])
