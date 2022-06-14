@@ -70,7 +70,7 @@ export default function ProductUpdateForm() {
   }, [router.isReady])
 
   useEffect(() => {
-    productData.videos.forEach((video) => convertUrl(video))
+    productData.videos?.forEach((video) => convertUrl(video))
   }, [productData.videos])
 
   const formik = useFormik({
@@ -133,7 +133,6 @@ export default function ProductUpdateForm() {
     setVideoData((videos) => videos.filter((_, index) => index !== idx))
     arrayHelpers.remove(idx)
   }
-  console.log(videoData)
   return (
     <Grid container spacing={2}>
       {/* Picture */}

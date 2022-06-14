@@ -69,6 +69,7 @@ export default function ProductCreationForm() {
       videos: [],
     },
     onSubmit: async (value) => {
+      const videos = value.videos.filter((video) => Boolean(video))
       try {
         const response = await fetch("http://localhost:3001/v1/cars", {
           method: "POST",
@@ -77,7 +78,17 @@ export default function ProductCreationForm() {
             "Content-Type": "application/json",
           },
           credentials: "include",
-          body: JSON.stringify(value),
+          body: JSON.stringify({
+            title: value.title,
+            brand: value.brand,
+            grade: value.grade,
+            category: value.category,
+            year: value.year,
+            kiloMeter: value.kiloMeter,
+            description: value.description,
+            photoProducts: value.photoProducts,
+            videos,
+          }),
         })
         console.log(await response.json())
         if (response.ok) {

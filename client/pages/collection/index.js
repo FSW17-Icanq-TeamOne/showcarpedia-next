@@ -17,15 +17,11 @@ export default function Collection() {
 
   const loadData = async () => {
     await dispatch(fetchCollectionData())
-  }
-
-  const loadWishlistData = async () => {
     await dispatch(fetchWishlistData())
   }
 
   useEffect(() => {
     if (!router.isReady) return
-    loadWishlistData()
     loadData()
   }, [router.isReady])
 
@@ -48,14 +44,9 @@ export default function Collection() {
           spacing={{xs: 2, md: 3}}
           columns={{xs: 4, sm: 8, md: 12}}
         >
-          {data?.data.map((datum, idx) => (
+          {data.data?.map((datum, idx) => (
             <Grid item xs={4} sm={4} md={4} key={idx}>
-              <Show
-                data={datum}
-                wishlist={wishlistData?.data.find(
-                  (data) => data.id === datum.id
-                )}
-              />
+              <Show data={datum} wishlist={wishlistData?.data} />
             </Grid>
           ))}
         </Grid>

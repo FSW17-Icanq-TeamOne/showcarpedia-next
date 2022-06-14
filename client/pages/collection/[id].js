@@ -2,8 +2,9 @@ import MainNavbar from "../../component/NavBar/MainNavbar"
 import {Grid} from "@mui/material"
 import Details from "../../component/CollectionPage/CardDetail"
 import {useRouter} from "next/router"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {useEffect} from "react"
+import {fetchCollectionDataById} from "../../redux/slices/collectionsSlice"
 
 export default function DetailProduct() {
   const data = useSelector((state) => state.collections)
@@ -19,14 +20,13 @@ export default function DetailProduct() {
     if (!router.isReady) return
     loadData()
   }, [router.isReady])
-
   return (
     <>
       <Grid>
         <MainNavbar />
       </Grid>
       <Grid>
-        <Details data={data.data} />
+        <Details data={data.data[0]} />
       </Grid>
     </>
   )
