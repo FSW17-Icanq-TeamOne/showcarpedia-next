@@ -57,10 +57,10 @@ beforeAll(async (done) => {
 
   afterAll(async (done) => {
     try {
-      await queryInterface.bulkDelete("Users");
-      await queryInterface.bulkDelete("Abouts", null, {
-          truncate: true
+      await queryInterface.bulkDelete("Users", null, {
+        cascade: true,
       });
+      await queryInterface.bulkDelete("Abouts");
       done();
     } catch (error) {
       done(error);
@@ -84,7 +84,7 @@ describe("GET /v1/about", () => {
 
   describe("PUT /v1/about", () => {
     //login success
-    test("TEST CASEe 2: Update Web Settings Data", (done) => {
+    test("TEST CASE 2: Update Web Settings Data", (done) => {
       request(app)
         .post("/v1/about")
         .send({ title: webSettings_title, content: webSettings_content })

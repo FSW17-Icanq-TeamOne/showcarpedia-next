@@ -15,8 +15,9 @@ class chatController {
             ]
           })
           res.status(201).json(rooms)
-      } catch (err) {
-          return res.status(500).json({message: err.message})
+      } 
+      catch (err) {
+          // return res.status(500).json({message: err.message})
       }
     }
 
@@ -29,7 +30,7 @@ class chatController {
             })
             res.status(201).json(room)
         } catch (err) {
-            return res.status(500).json({message: err.message})
+            // return res.status(500).json({message: err.message})
         }
     }
     
@@ -44,7 +45,7 @@ class chatController {
           });
           res.status(201).json(nama);
         } catch (error) {
-          throw error;
+          // throw error;
         }
       }
     
@@ -69,7 +70,7 @@ class chatController {
          })
          res.status(201).json(chat)
        } catch (error) {
-         throw error
+        //  throw error
        }
     }
 
@@ -98,7 +99,7 @@ class chatController {
         })
         res.status(201).json(chat)
       } catch (error) {
-        throw error
+        // throw error
       }
    }
 
@@ -124,12 +125,13 @@ class chatController {
             room: roomName,
             chat
           })
-        } else if (!chat) {
-          res.status(400).json({ message: "Bad Request" })
-        }
+        } 
+        // else if (!chat) {
+        //   res.status(400).json({ message: "Bad Request" })
+        // }
 
     } catch (error) {
-        return res.status(500).json({ message: error.message })
+        // return res.status(500).json({ message: error.message })
    }
   }
 
@@ -155,12 +157,13 @@ class chatController {
           room: roomName.id,
           chat
         })
-      } else if (!chat) {
-        res.status(400).json({ message: "Bad Request" })
-      }
+      } 
+      // else if (!chat) {
+      //   res.status(400).json({ message: "Bad Request" })
+      // }
 
   } catch (error) {
-      return res.status(500).json({ message: error.message })
+      // return res.status(500).json({ message: error.message })
  }
 }
 }

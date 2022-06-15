@@ -126,8 +126,12 @@ beforeAll(async (done) => {
 
   afterAll(async (done) => {
     try {
-      await queryInterface.bulkDelete("Users");
-      await queryInterface.bulkDelete("Products");
+      await queryInterface.bulkDelete("Users", null, {
+        cascade: true,
+      });
+      await queryInterface.bulkDelete("Products", null, {
+        cascade: true,
+      });
       await queryInterface.bulkDelete("Wishlists");
       done();
     } catch (error) {
