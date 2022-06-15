@@ -31,7 +31,7 @@ export default function Show({data, wishlist}) {
   const handleClose = () => setIsOpen(false)
 
   useEffect(() => {
-    if (wishlist.find((datum) => datum.id === data.id)) {
+    if (wishlist?.find((datum) => datum.id === data.id)) {
       setIsWishlist(true)
     }
   }, [wishlist])

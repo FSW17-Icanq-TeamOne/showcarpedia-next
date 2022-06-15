@@ -162,13 +162,13 @@ class carsController {
         where: {
           ...filteredQuery,
           kiloMeter: {
-            [Op.lte]: Number(mileages) <= 0 ? 1000000 : Number(mileages),
+            [Op.lte]: Number(mileages) || 0 <= 0 ? 1000000 : Number(mileages),
           },
           year: {
-            [Op.gte]: Number(minYear),
+            [Op.gte]: Number(minYear) || 0,
           },
           grade: {
-            [Op.gte]: Number(grade),
+            [Op.gte]: Number(grade) || 0,
           },
         },
       })
