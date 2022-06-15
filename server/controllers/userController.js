@@ -4,7 +4,16 @@ const { hashPassword } = require("../helpers/passwordHandler")
 class UserController {
 
     static async getEditForm(req, res) {
-      const adminId = req.user.id
+      const adminId = await req.user.id
+    //   try{
+    //   const data = await User.findByPk(adminId)
+    //   return res.status(201).json({
+    //     username: data.username,
+    //     email: data.email,
+    //   })
+    // }catch(error){
+    //   throw error
+    // }
       User.findByPk(adminId)
         .then((data) => {
           return res.status(201).json({
@@ -13,7 +22,7 @@ class UserController {
           })
         })
         .catch((err) => {
-          console.log(err)
+          // console.log(err)
         })
     }
 
@@ -33,7 +42,7 @@ class UserController {
           res.status(201).json({message: "Success"})
         })
         .catch((err) => {
-          console.log(err)
+          // console.log(err)
         })
     }
  }

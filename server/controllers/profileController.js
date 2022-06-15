@@ -7,9 +7,9 @@ class ProfileController {
     try {
       if (!UserId) return res.json("user not found");
       const data = await Profile.findOne({ where: { UserId } });
-      res.status(200).json(data);
+      res.status(201).json(data);
     } catch (error) {
-      throw error;
+      // throw error;
     }
   }
   static async updateProfile(req,res){
@@ -29,13 +29,13 @@ class ProfileController {
     try {
         if(!UserId) return res.json("user not found")
         await Profile.update(payload,{where:{UserId}})
-        res.status(200).json(
+        res.status(201).json(
           {
             message: "Success"
           }
         )
     } catch (error) {
-        throw error
+        // throw error
     }
   }
 }
