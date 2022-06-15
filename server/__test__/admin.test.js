@@ -23,7 +23,7 @@ let access_token2;
 
 
 beforeAll(async done => {
-    const admin = [
+    const user = [
         {
             username: 'administrator',
             email: 'admin@showcarpedia.com',
@@ -45,7 +45,7 @@ beforeAll(async done => {
     ];
 
     try {
-        const data = await queryInterface.bulkInsert('Users', admin, { returning: true });
+        const data = await queryInterface.bulkInsert('Users', user, { returning: true });
         
         id1 = data[0].id
         username1 = data[0].username;
@@ -99,7 +99,7 @@ describe('GET /v1/admin', () => {
             });
     });
 
-    test('TEST CASE 2: [SUCCESS] Get Admin List -- Admin', done => {
+    test('TEST CASE 2: [SUCCESS] Get Admin List -- Wrong Authorization', done => {
         request(app)
             .get('/v1/admin')
             .set('Cookie', [`access_token=${access_token2}`])
@@ -126,7 +126,7 @@ describe('GET /v1/admin', () => {
 
 // POST Create Admin Account
 describe('POST /v1/admin/register', () => {
-    test('TEST CASE 1: [SUCCESS] Register New Admin', done => {
+    test('TEST CASE 1: [SUCCESS] Register Admin', done => {
         request(app)
             .post('/v1/admin/register')
             .set('Cookie', [`access_token=${access_token1}`])
@@ -143,7 +143,7 @@ describe('POST /v1/admin/register', () => {
             });
     });
 
-    test('TEST CASE 2: [FAIL] No Request Body', done => {
+    test('TEST CASE 2: [FAIL] Register Admin -- No Data Sended', done => {
         request(app)
             .post('/v1/admin/register')
             .set('Cookie', [`access_token=${access_token1}`])
@@ -155,7 +155,7 @@ describe('POST /v1/admin/register', () => {
             });
     });
 
-    test('TEST CASE 3: [FAIL] Register Admin with Existed Username', done => {
+    test('TEST CASE 3: [FAIL] Register Admin -- Existed Username', done => {
         request(app)
             .post('/v1/admin/register')
             .set('Cookie', [`access_token=${access_token1}`])
@@ -173,7 +173,7 @@ describe('POST /v1/admin/register', () => {
             });
     });
 
-    test('TEST CASE 4: [FAIL] Register Admin with Existed Email', done => {
+    test('TEST CASE 4: [FAIL] Register Admin -- Existed Email', done => {
         request(app)
             .post('/v1/admin/register')
             .set('Cookie', [`access_token=${access_token1}`])
@@ -191,7 +191,7 @@ describe('POST /v1/admin/register', () => {
             });
     });
 
-    test('TEST CASE 5: [FAIL] Register Admin with Wrong Validation -- Username less than 5 characters', done => {
+    test('TEST CASE 5: [FAIL] Register Admin -- Wrong Validation -- Username less than 5 characters', done => {
         request(app)
             .post('/v1/admin/register')
             .set('Cookie', `access_token=${access_token1}`)
@@ -209,7 +209,7 @@ describe('POST /v1/admin/register', () => {
             });
     });
 
-    test('TEST CASE 6: [FAIL] Register Admin with Wrong Validation -- Empty Username', done => {
+    test('TEST CASE 6: [FAIL] Register Admin -- Wrong Validation -- Empty Username', done => {
         request(app)
             .post('/v1/admin/register')
             .set('Cookie', `access_token=${access_token1}`)
@@ -226,7 +226,7 @@ describe('POST /v1/admin/register', () => {
             });
     });
 
-    test('TEST CASE 7: [FAIL] Register Admin with Wrong Validation -- Empty Email', done => {
+    test('TEST CASE 7: [FAIL] Register Admin -- Wrong Validation -- Empty Email', done => {
         request(app)
             .post('/v1/admin/register')
             .set('Cookie', `access_token=${access_token1}`)
@@ -243,7 +243,7 @@ describe('POST /v1/admin/register', () => {
             });
     });
 
-    test('TEST CASE 8: [FAIL] Register Admin with Wrong Validation -- Empty Password', done => {
+    test('TEST CASE 8: [FAIL] Register Admin -- Wrong Validation -- Empty Password', done => {
         request(app)
             .post('/v1/admin/register')
             .set('Cookie', `access_token=${access_token1}`)
@@ -260,7 +260,7 @@ describe('POST /v1/admin/register', () => {
             });
     });
 
-    test('TEST CASE 9: [FAIL] Register Admin with Wrong Validation -- Password is less than 5 characters', done => {
+    test('TEST CASE 9: [FAIL] Register Admin -- Wrong Validation -- Password is less than 5 characters', done => {
         request(app)
             .post('/v1/admin/register')
             .set('Cookie', `access_token=${access_token1}`)
@@ -278,7 +278,7 @@ describe('POST /v1/admin/register', () => {
             });
     });
 
-    test('TEST CASE 10: [FAIL] Register Admin with Wrong Authorization', done => {
+    test('TEST CASE 10: [FAIL] Register Admin -- Wrong Authorization', done => {
         request(app)
             .post('/v1/api/register')
             .set('Cookie', `access_token=${access_token2}`)
@@ -311,7 +311,7 @@ describe('GET /v1/admin/edit/:id', () => {
             });
     });
 
-    test('TEST CASE 2: [FAIL] Get Edit Admin Form -- Admin', done => {
+    test('TEST CASE 2: [FAIL] Get Edit Admin Form -- Wrong Authorization', done => {
         request(app)
             .get(`/v1/admin/edit/${id2}`)
             .set('Cookie', `access_token=${access_token2}`)
@@ -324,7 +324,7 @@ describe('GET /v1/admin/edit/:id', () => {
             });
     });
         
-    test('TEST CASE 3: [FAIL] Get Edit Admin Form -- No Login', done => {
+    test('TEST CASE 3: [FAIL] Get Edit Admin Form -- No Authentication', done => {
         request(app)
             .get(`/v1/admin/edit/${id2}`)
             .end((error, res) => {
@@ -339,8 +339,8 @@ describe('GET /v1/admin/edit/:id', () => {
 
 
  const update = {
-    username: 'alexgoz',
-    email: 'alex@mail.com',
+    username: 'godjirah',
+    email: 'godjirah@mail.com',
     password: '1122334455'
  }
 
@@ -355,11 +355,65 @@ describe('PUT /v1/admin/edit/:id', () => {
                 if (error) return done(error);
                 const { status, body } = res;
                 expect(status).toBe(201);
-                expect(body).toHaveProperty('message', 'Success');
-                expect(body).toHaveProperty('username', update.username);
-                expect(body).toHaveProperty('email', update.email);
-                expect(body).toHaveProperty('password', update.password);
+                expect(body).toHaveProperty('message', 'Updating Success');
                 done();
-            })
-    })
-})
+            });
+    });
+
+    test('TEST CASE 2: [FAIL] Update Admin -- Wrong Validation', done => {
+        request(app)
+            .put(`/v1/admin/edit/${id2}`)
+            .set('Cookie', `access_token=${access_token2}`)
+            .send(update)
+            .end((error, res) => {
+                if (error) return done(error);
+                const { status, body } = res;
+                expect(status).toBe(401);
+                expect(body).toHaveProperty('message', 'You are not supposed to be here, homie');
+                done();
+            });
+    });
+
+    test('TEST CASE 3: [FAIL] Update Admin -- No Data Sended', done => {
+        request(app)
+            .put(`/v1/admin/edit/${id2}`)
+            .set('Cookie', `access_token=${access_token1}`)
+            .end((error, res) => {
+                if (error) done(error);
+                const { status, body } = res;
+                console.log(status, body);
+                expect(status).toBe(500);
+                done();
+            });
+   });
+});
+
+
+// DELETE Admin
+describe('DELETE /v1/admin/delete/:id', () => {
+    test('TEST CASE 1: [SUCCESS] Delete Admin', done => { 
+        request(app)
+            .delete(`/v1/admin/delete/${id2}`)
+            .set('Cookie', `access_token=${access_token1}`)
+            .end((error, res) => {
+                if (error) return done(error);
+                const { status, body } = res;
+                expect(status).toBe(201);
+                expect(body).toHaveProperty('message', 'User Deleted');
+                done();
+            });
+     });
+
+    test('TEST CASE 2: [FAIL] Delete Admin -- Wrong Authorization', done => {
+        request(app)
+            .delete(`/v1/admin/delete/${id2}`)
+            .set('Cookie', `access_token=${access_token2}`)
+            .end((error, res) => {
+                if (error) return done(error);
+                const { status, body } = res;
+                expect(status).toBe(409);
+                expect(body).toHaveProperty('message', 'You are not supposed to be here, homie');
+                done();
+            });
+    });
+});

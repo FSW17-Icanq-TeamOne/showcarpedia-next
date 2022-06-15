@@ -90,53 +90,66 @@ class AdminController {
         }
       }
 
-    static async edit(req, res) {
-      const adminId = req.params.id
-      let updatedAdmin = {
-        username: req.body.username,
-        email: req.body.email,
-        password: hashPassword(req.body.password)
-      }
-      User.update(updatedAdmin, {
-        where: {
-          id: adminId
+    static edit = async (req, res) => {
+      try {
+        const role = req.user.role;
+        const adminId = req.params.id
+        const updatedAdmin = {
+          username: req.body.username,
+          email: req.body.email,
+          password: hashPassword(req.body.password)
         }
-      })
-        .then(() => {
-          res.status(201).json({message: "Success"})
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+  
+        if (role === 'superAdmin') {
+          const update = await User.update(updatedAdmin, {
+            where: {
+              id: adminId
+            }
+          })
+          if (update) {
+            res.status(201).json({ message: 'Updating Success' });
+          }
+        } else {
+          res.status(401).json({ message: 'You are not supposed to be here, homie' })
+        }
+      } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: error });
+      }
     }
 
     static async delete(req, res) {
-      const adminId = req.params.id
-      let deletedAdmin = {
-        delete: true
-      }
-      User.update(deletedAdmin, {
-        where: {
-          id: adminId
+      try {
+        const adminId = req.params.id;
+        const role = req.user.role;
+        const deletedAdmin = {
+          delete: true
         }
-      })
-        .then(() => {
-          res.status(201).json({message: `Success`})
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-      Profile.update(deletedAdmin, {
-          where: {
-            UserId: adminId
+  
+        if (role === 'superAdmin') {
+          const deleteUser = await User.update(deletedAdmin, {
+            where: {
+              id: adminId
+            }
+          })
+            if (deleteUser) {
+              res.status(201).json({ message: 'User Deleted'})
+            }
+          const deleteProfile = await Profile.update(deletedAdmin, {
+              where: {
+                UserId: adminId
+              }
+            })
+          if (deleteProfile) {
+            res.status(201).json({ message: 'Profile Deleted' })
           }
-        })
-          .then(() => {
-            res.status(201).json({message: `Success`})
-          })
-          .catch((err) => {
-            console.log(err)
-          })
+        } else {
+          res.status(409).json({ message: 'You are not supposed to be here, homie' });
+        }
+      } catch (error) {
+        console.log(error)
+        // res.status(500).json({ message: error });
+      }
     }
  }
  module.exports = AdminController
