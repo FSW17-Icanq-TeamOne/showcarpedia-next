@@ -41,7 +41,7 @@ const fetchData = async () => {
           {data.data.length?(
             data.data.map((datum, idx) => (
               <Grid item xs={4} sm={4} md={4} key={idx}>
-                <Show data={datum} wishlist={datum}  />
+                <Show data={datum} wishlist={data.data} />
               </Grid>
             ))
           ):(
