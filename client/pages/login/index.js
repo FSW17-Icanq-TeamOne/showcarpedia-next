@@ -15,8 +15,8 @@ export default function Login () {
             username: '',
             password: ''
         },
-        onSubmit: async values => {
-            const login = await dispatch(loginAccount(values))
+        onSubmit:  values => {
+            const login =  dispatch(loginAccount(values))
             console.log(login)
             if(login.error) {
                 console.log(login.payload?.message)
