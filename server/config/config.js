@@ -8,8 +8,8 @@ module.exports={
     "dialect": "postgres"
   },
   "test": {
-    "username": "postgres",
-    "password": "postgres",
+    "username": process.env.DB_USERNAME,
+    "password": process.env.DB_PASSWORD,
     "database": "scp_test",
     "host": "127.0.0.1",
     "dialect": "postgres"
