@@ -9,6 +9,7 @@ let access_token
 let productId
 const product = [
   {
+    id: 1,
     title: "MobilAvanza",
     brand: "Toyota",
     year: 2021,
@@ -57,7 +58,6 @@ beforeAll(async (done) => {
       updatedAt: new Date(),
     },
   ]
-
   try {
     const dataUser = await queryInterface.bulkInsert("Users", user, {
       returning: true,
@@ -68,7 +68,6 @@ beforeAll(async (done) => {
       email: dataUser[0].email,
       role: dataUser[0].role,
     })
-    // productId = dataProduct.id
     done()
   } catch (error) {
     done(error)
@@ -78,6 +77,7 @@ beforeAll(async (done) => {
 afterAll(async (done) => {
   try {
     await queryInterface.bulkDelete("Users")
+    await queryInterface.bulkDelete("Products")
     done()
   } catch (error) {
     done(error)
@@ -91,7 +91,7 @@ describe("GET v1/cars", () => {
   })
   test("TEST CASE 1: GET ALL DATA SUCCESS", async (done) => {
     await queryInterface.bulkInsert("Products", product, {
-      retuning: true,
+      returning: true,
     })
     request(app)
       .get("/v1/cars")
@@ -128,28 +128,63 @@ describe("POST v1/cars", () => {
         if (err) return done(err)
         const {body, status} = res
         expect(status).toBe(201)
-        expect(body).objectContaining({
+        expect(body).toStrictEqual({
           message: "Success",
-          ...product,
+          title: newProduct.title,
+          brand: newProduct.brand,
+          year: newProduct.year,
+          kiloMeter: newProduct.kiloMeter,
+          grade: newProduct.grade,
+          category: newProduct.category,
+          description: newProduct.description,
+          photoProducts: newProduct.photoProducts,
+          videos: newProduct.videos,
         })
+        done()
       })
-    done()
   })
 
-  test("TEST 1 CREATE PRODUCT FAILED (ACCESS TOKEN)" =>{
+  test("TEST 4 CREATE PRODUCT FAILED (ACCESS TOKEN)", (done) => {
     request(app)
       .post("/v1/cars")
       .send(newProduct)
+      .end((err, res) => {
+        if (err) return done(err)
+        const {body, status} = res
+        expect(status).toBe(404)
+        expect(body).toHaveProperty("message", "Please Login!")
+        done()
+      })
+  })
+})
+
+describe("GET v1/cars/:id", () => {
+  beforeEach(async (done) => {
+    await queryInterface.bulkInsert("Products", product, {
+      returning: true,
+    })
+    done()
+  })
+  test("TEST 5 GET CAR BY ID SUCCESS", (done) => {
+    request(app)
+      .get(`/v1/cars/details/${product[0].id}`)
       .set("Cookie", [`access_token=${access_token}`])
       .end((err, res) => {
         if (err) return done(err)
         const {body, status} = res
-        expect(status).toBe(201)
-        expect(body).objectContaining({
-          message: "Success",
-          ...product,
+        expect(status).toBe(200)
+        expect(body).toStrictEqual({
+          title: product[0].title,
+          brand: product[0].brand,
+          year: product[0].year,
+          kiloMeter: product[0].kiloMeter,
+          grade: product[0].grade,
+          category: product[0].category,
+          description: product[0].description,
+          photoProducts: product[0].photoProducts,
+          videos: product[0].videos,
         })
+        done()
       })
-    done()
   })
 })

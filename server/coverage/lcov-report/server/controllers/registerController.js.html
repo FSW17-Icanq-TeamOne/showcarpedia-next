@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">17.39% </span>
+                <span class="strong">16% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/23</span>
+                <span class='fraction'>4/25</span>
             </div>
         
             
@@ -117,35 +117,27 @@
 <a name='L52'></a><a href='#L52'>52</a>
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
-<a name='L55'></a><a href='#L55'>55</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -158,6 +150,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -171,68 +178,73 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span></td><td class="text"><pre class="prettyprint lang-js">const { User, Profile, RoomLists } = require("../models")
-const { hashPassword } = require("../helpers/passwordHandler")
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const {User, Profile, RoomLists} = require("../models")
+const {hashPassword} = require("../helpers/passwordHandler")
 &nbsp;
 class RegisterController {
-     static register = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-<span class="cstat-no" title="statement not covered" >         try {</span>
-             const { username, email, password } = <span class="cstat-no" title="statement not covered" >req.body</span>
-             const isEmailExist = <span class="cstat-no" title="statement not covered" >await User.findOne({ where: { email } })</span>
-<span class="cstat-no" title="statement not covered" >             if (isEmailExist) <span class="cstat-no" title="statement not covered" >return res.status(409).json({ message: "Email is already taken" })</span></span>
-             const isUsernameExist = <span class="cstat-no" title="statement not covered" >await User.findOne({ where: { username } })</span>
-<span class="cstat-no" title="statement not covered" >             if (isUsernameExist) <span class="cstat-no" title="statement not covered" >return res.status(409).json({ message: "Username is already exists" })</span></span>
- 
-             const payloadUser = <span class="cstat-no" title="statement not covered" >{</span>
-                 username, email, password: hashPassword(password), role: "user", delete: false
-             }
-             const user = <span class="cstat-no" title="statement not covered" >await User.create(payloadUser)</span>
-             
-<span class="cstat-no" title="statement not covered" >             if (user) {</span>
- 
-               const payloadProfile = <span class="cstat-no" title="statement not covered" >{</span>
-                 UserId: user.id,
-                 delete:false
-               }
- 
-               const profile = <span class="cstat-no" title="statement not covered" >await Profile.create(payloadProfile)</span>
- 
-<span class="cstat-no" title="statement not covered" >               if (profile) {</span>
-                
-                const payloadRoomLists = <span class="cstat-no" title="statement not covered" >{</span>
-                  UserId: user.id,
-                  Room: user.username + "_admin"
-                 }
+  static register = <span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
+<span class="cstat-no" title="statement not covered" >    try {</span>
+      const {username, email, password} = <span class="cstat-no" title="statement not covered" >req.body</span>
+      const isEmailExist = <span class="cstat-no" title="statement not covered" >await User.findOne({where: {email}})</span>
+<span class="cstat-no" title="statement not covered" >      if (isEmailExist)</span>
+<span class="cstat-no" title="statement not covered" >        return res.status(409).json({message: "Email is already taken"})</span>
+      const isUsernameExist = <span class="cstat-no" title="statement not covered" >await User.findOne({where: {username}})</span>
+<span class="cstat-no" title="statement not covered" >      if (isUsernameExist)</span>
+<span class="cstat-no" title="statement not covered" >        return res.status(409).json({message: "Username is already exists"})</span>
 &nbsp;
-                 const roomList = <span class="cstat-no" title="statement not covered" >await RoomLists.create(payloadRoomLists)</span>
-                 
-<span class="cstat-no" title="statement not covered" >                 if (roomList){</span>
-<span class="cstat-no" title="statement not covered" >                    return res.status(201).json({</span>
-                      username: user.username,
-                      email: user.email,
-                      role: user.role,
-                      profile,
-                      roomList
-                    })
-                 }
-               }
- 
-             } else <span class="cstat-no" title="statement not covered" >if (!user) {</span>
-<span class="cstat-no" title="statement not covered" >               res.status(400).json({ message: "Bad Request" })</span>
-             }
-         } catch (error) {
-<span class="cstat-no" title="statement not covered" >             return res.status(500).json({ message: error.message })</span>
-         }
-     }
- }
- module.exports = RegisterController</pre></td></tr></table></pre>
+      const payloadUser = <span class="cstat-no" title="statement not covered" >{</span>
+        username,
+        email,
+        password: hashPassword(password),
+        role: "user",
+        delete: false,
+      }
+      const user = <span class="cstat-no" title="statement not covered" >await User.create(payloadUser)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      if (user) {</span>
+        const payloadProfile = <span class="cstat-no" title="statement not covered" >{</span>
+          UserId: user.id,
+          delete: false,
+        }
+&nbsp;
+        const profile = <span class="cstat-no" title="statement not covered" >await Profile.create(payloadProfile)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if (profile) {</span>
+          const payloadRoomLists = <span class="cstat-no" title="statement not covered" >{</span>
+            UserId: user.id,
+            Room: user.username + "_admin",
+          }
+&nbsp;
+          const roomList = <span class="cstat-no" title="statement not covered" >await RoomLists.create(payloadRoomLists)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          if (roomList) {</span>
+<span class="cstat-no" title="statement not covered" >            return res.status(201).json({</span>
+              username: user.username,
+              email: user.email,
+              role: user.role,
+              profile,
+              roomList,
+            })
+          }
+        }
+      } else <span class="cstat-no" title="statement not covered" >if (!user) {</span>
+<span class="cstat-no" title="statement not covered" >        res.status(400).json({message: "Bad Request"})</span>
+      }
+    } catch (error) {
+<span class="cstat-no" title="statement not covered" >      return res.status(500).json({message: error.message})</span>
+    }
+  }
+}
+module.exports = RegisterController
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Jun 14 2022 18:30:20 GMT+0700 (Western Indonesia Time)
+                at Thu Jun 16 2022 03:59:01 GMT+0700 (Western Indonesia Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

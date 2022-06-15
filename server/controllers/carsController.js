@@ -55,8 +55,8 @@ class carsController {
           delete: false,
         },
       })
-      if (!data.length) res.json("please add new product")
-      res.status(200).json(data)
+      if (!data.length) return res.status(400).json("please add new product")
+      return res.status(200).json(data)
     } catch (error) {
       throw error
     }
