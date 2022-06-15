@@ -44,11 +44,13 @@ class RegisterController {
                  }
                }
  
-             } else if (!user) {
-               res.status(400).json({ message: "Bad Request" })
-             }
-         } catch (error) {
-             return res.status(500).json({ message: error.message })
+             } 
+            //  else if (!user) {
+            //   //  res.status(400).json({ message: "Bad Request" })
+            //  }
+         } 
+         catch (error) {
+            //  return res.status(500).json({ message: error.message })
          }
      }
  }

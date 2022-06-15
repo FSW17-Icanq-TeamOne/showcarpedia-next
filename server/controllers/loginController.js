@@ -39,7 +39,7 @@ class AuthController {
                 httpOnly: true
             })
             
-            return res.status(200).json( { 
+            return res.status(201).json( { 
                 id: user.id,
                 role: user.role,
                 access_token: access_token,
@@ -47,7 +47,7 @@ class AuthController {
                 message: "Success"
             } )
         } catch (error) {
-            return res.status(500).json( { message: error.message } )
+            // return res.status(500).json( { message: error.message } )
         }
     }
 }

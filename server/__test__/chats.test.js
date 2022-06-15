@@ -84,7 +84,6 @@ beforeAll(async (done) => {
 
   afterAll(async (done) => {
     try {
-      
       await queryInterface.bulkDelete("RoomLists", null, {
         cascade: true
       });

@@ -11,8 +11,6 @@ const wishlistRouter = require("./wishlistRouter")
 const chatRouter = require("./chatRouter")
 const insightsRouter = require("./InsightsRouter")
 
-v1.get("/", (req,res) => res.send("ini dari v1"))
-
 v1.use("/register", registerRouter)
 v1.use("/login", loginRouter)
 v1.use("/about", aboutRouter)

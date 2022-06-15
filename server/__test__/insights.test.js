@@ -185,7 +185,7 @@ describe("GET /v1/insights/usersTotal", () => {
   });
 
   describe("GET /v1/insights/topWishlists", () => {
-    test("TEST CASE 12: Get Insights of Top Wishlists Data", (done) => {
+    test("TEST CASE 2: Get Insights of Top Wishlists Data", (done) => {
       request(app)
         .get("/v1/insights/topWishlists")
         .set("Cookie", [`access_token=${access_token}`, `role=${userRole}`])
@@ -193,6 +193,20 @@ describe("GET /v1/insights/usersTotal", () => {
           if (err) return done(err);
           const { body, status } = res;
           expect(status).toBe(201);
+          done();
+        });
+    });
+  });
+
+  describe("GET /v1/insights/adminsTotal", () => {
+    test("TEST CASE 3: Get Insights of Admins Total Data - Access Token Blank", (done) => {
+      request(app)
+        .get("/v1/insights/adminsTotal")
+        .set("Cookie", [`access_token=${" "}`, `role=${userRole}`])
+        .end((err, res) => {
+          if (err) return done(err);
+          const { body, status } = res;
+          expect(status).toBe(404);
           done();
         });
     });
