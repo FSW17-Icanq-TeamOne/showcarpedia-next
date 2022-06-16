@@ -12,16 +12,16 @@ module.exports = async (req, res, next) => {
           id: decodedData.id
         }
       })
-      if (!findUser) {
-        return res.status(404).json({ message: "Sorry the user not found" })
-      }
+      // if (!findUser) {
+      //   return res.status(404).json({ message: "Sorry the user not found" })
+      // }
       req.user = decodedData
       next()
     } else {
       return res.status(404).json({ message: "Please Login!" })
     }
   } catch (error) {
-    console.log(error)
-    return res.status(500).json({ message: "There is error" })
+    // console.log(error)
+    // return res.status(500).json({ message: "There is error" })
   }
 }

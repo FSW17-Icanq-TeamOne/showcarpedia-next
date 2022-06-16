@@ -5,11 +5,11 @@ class ProfileController {
   static async readProfile(req, res) {
     const UserId = req.user.id;
     try {
-      if (!UserId) return res.json("user not found");
+      // if (!UserId) return res.json("user not found");
       const data = await Profile.findOne({ where: { UserId } });
       res.status(200).json(data);
     } catch (error) {
-      throw error;
+      // throw error;
     }
   }
   static async updateProfile(req,res){
@@ -27,7 +27,7 @@ class ProfileController {
       updateAt: new Date()}
 
     try {
-        if(!UserId) return res.json("user not found")
+        // if(!UserId) return res.json("user not found")
         await Profile.update(payload,{where:{UserId}})
         res.status(200).json(
           {
@@ -35,7 +35,7 @@ class ProfileController {
           }
         )
     } catch (error) {
-        throw error
+        // throw error
     }
   }
 }

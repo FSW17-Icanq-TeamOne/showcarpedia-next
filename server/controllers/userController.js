@@ -1,4 +1,4 @@
-const { User, Profile } = require("../models")
+const { User } = require("../models")
 const { hashPassword } = require("../helpers/passwordHandler")
 
 class UserController {
@@ -12,9 +12,9 @@ class UserController {
             email: data.email,
           })
         })
-        .catch((err) => {
-          console.log(err)
-        })
+        // .catch((err) => {
+        //   console.log(err)
+        // })
     }
 
     static async edit(req, res) {
@@ -32,9 +32,9 @@ class UserController {
         .then(() => {
           res.status(201).json({message: "Success"})
         })
-        .catch((err) => {
-          console.log(err)
-        })
+        // .catch((err) => {
+        //   console.log(err)
+        // })
     }
  }
  module.exports = UserController
