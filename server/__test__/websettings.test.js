@@ -5,9 +5,6 @@ const { queryInterface } = sequelize;
 const { hashPassword } = require("../helpers/passwordHandler")
 const { generateToken } = require("../helpers/tokenHandler")
 
-let access_token;
-let userRole;
-
 let webSettings_title = "Cemanapedia";
 let webSettings_content = "Cemanapedia is TEAM ONE Web Product";
 
@@ -38,12 +35,6 @@ beforeAll(async (done) => {
       });
       
       username = dataAdmin[0].username;
-      userRole = dataAdmin[0].role;
-      access_token = generateToken({
-        id: dataAdmin[0].id,
-        email: dataAdmin[0].email,
-        role: dataAdmin[0].role,
-      });
 
       const dataWebSettings = await queryInterface.bulkInsert("Abouts", webSettings, {
         returning: true,  
@@ -57,10 +48,10 @@ beforeAll(async (done) => {
 
   afterAll(async (done) => {
     try {
-      await queryInterface.bulkDelete("Users");
-      await queryInterface.bulkDelete("Abouts", null, {
-          truncate: true
+      await queryInterface.bulkDelete("Users", null, {
+        cascade: true,
       });
+      await queryInterface.bulkDelete("Abouts");
       done();
     } catch (error) {
       done(error);

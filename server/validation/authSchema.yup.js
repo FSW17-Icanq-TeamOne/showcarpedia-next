@@ -4,7 +4,7 @@ const registerUserSchema = yup.object({
     body: yup.object({
         email: yup.string().required(),
         username: yup.string().min(5).max(20).required(),
-        password: yup.string().min(5)
+        password: yup.string().min(5).required()
     })
 })
   

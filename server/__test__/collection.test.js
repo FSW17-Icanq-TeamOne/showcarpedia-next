@@ -28,22 +28,22 @@ const product = [
 ]
 
 const newProduct = {
-  "title": "Mobil Itu",
-  "brand": "Porsche",
-  "year": 2021,
-  "kiloMeter": 10000,
-  "grade": 5,
-  "category": "Porsche",
-  "photoProducts": [
+  title: "Mobil Itu",
+  brand: "Porsche",
+  year: 2021,
+  kiloMeter: 10000,
+  grade: 5,
+  category: "Porsche",
+  photoProducts: [
     "https://firebasestorage.googleapis.com/v0/b/react-upload-f84bf.appspot.com/o/multipleImages%2FThu%20Apr%2021%202022%2000%3A05%3A41%20GMT%2B0700%20(Western%20Indonesia%20Time)download%20(2).jpeg?alt=media&token=481d173f-2804-4c1a-ad72-44f99b62676a",
     "https://firebasestorage.googleapis.com/v0/b/react-upload-f84bf.appspot.com/o/multipleImages%2FThu%20Apr%2021%202022%2004%3A14%3A04%20GMT%2B0700%20(Western%20Indonesia%20Time)download%20(1).jpeg?alt=media&token=8af2e7c6-663a-4019-8ff8-09efce882df1",
     "https://firebasestorage.googleapis.com/v0/b/react-upload-f84bf.appspot.com/o/multipleImages%2FThu%20Apr%2021%202022%2004%3A14%3A04%20GMT%2B0700%20(Western%20Indonesia%20Time)download%20(2).jpeg?alt=media&token=fdcc1b0f-cdc1-4531-92cf-f2a8fda8d0aa",
   ],
-  "description": "Murah Mobil itu",
-  "delete": false,
-  "videos": ["something.com"],
-  "createdAt": new Date(),
-  "updatedAt": new Date(),
+  description: "Murah Mobil itu",
+  delete: false,
+  videos: ["something.com"],
+  createdAt: new Date(),
+  updatedAt: new Date(),
 }
 
 beforeAll(async (done) => {
@@ -158,7 +158,7 @@ describe("POST v1/cars", () => {
   })
 })
 
-describe("GET v1/cars/:id", () => {
+describe("GET v1/cars/details/:id", () => {
   beforeEach(async (done) => {
     await queryInterface.bulkInsert("Products", product, {
       returning: true,
@@ -184,6 +184,32 @@ describe("GET v1/cars/:id", () => {
           photoProducts: product[0].photoProducts,
           videos: product[0].videos,
         })
+        done()
+      })
+  })
+})
+
+describe("PUT v1/cars/update/:id", () => {
+  test("TEST 6 UPDATE CAR BY ID SUCCESS", (done) => {
+    request(app)
+      .put(`/v1/cars/update/${product[0].id}`)
+      .send(newProduct)
+      .set("Cookie", [`access_token=${access_token}`])
+      .end((err, res) => {
+        if (err) return done(err)
+        const {body, status} = res
+        expect(status).toBe(200)
+        // expect(body).toStrictEqual({
+        //   title: newProduct.title,
+        //   brand: newProduct.brand,
+        //   year: newProduct.year,
+        //   kiloMeter: newProduct.kiloMeter,
+        //   grade: newProduct.grade,
+        //   category: newProduct.category,
+        //   description: newProduct.description,
+        //   photoProducts: newProduct.photoProducts,
+        //   videos: newProduct.videos,
+        // })
         done()
       })
   })
