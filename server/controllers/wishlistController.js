@@ -1,33 +1,33 @@
-const { Wishlist, Product, User } = require("../models");
+const {Wishlist, Product, User} = require("../models")
 
 class wishlistController {
   static create = async (req, res) => {
-    const user = req.user;
-    const { ProductId } = req.body;
+    const user = req.user
+    const {ProductId} = req.body
     const payloadWishlist = {
       ProductId,
       UserId: user.id,
-    };
+    }
     try {
       const checkProduct = await Wishlist.findOne({
         where: payloadWishlist,
-      });
+      })
 
       if (checkProduct) {
-        return res.status(200).json("product has been added");
+        return res.status(200).json("product has been added")
       } else {
-       await Wishlist.create(payloadWishlist);
-        return res.status(200).json("wishlist created");
+        await Wishlist.create(payloadWishlist)
+        return res.status(200).json("wishlist created")
       }
     } catch (error) {
       return res.status(500).json({
         message: error.message,
-      });
+      })
     }
-  };
+  }
 
   static async getWishlists(req, res) {
-    const user = req.user;
+    const user = req.user
     try {
       const data = await Wishlist.findAll({
         where: {
@@ -43,11 +43,11 @@ class wishlistController {
             model: Product,
           },
         ],
-      });
-      if (!data.length) return res.status(400).json("please add new product");
-     return res.status(200).json(data);
+      })
+      if (!data.length) return res.status(400).json("please add new product")
+      return res.status(200).json(data)
     } catch (error) {
-      throw error;
+      throw error
     }
   }
 
@@ -103,23 +103,21 @@ class wishlistController {
   // }
   static async deleteWishlist(req, res) {
     try {
-      const { ProductId } = req.body;
-      const user = req.user;
-      const data = await Wishlist.destroy({
+      const {ProductId} = req.body
+      const user = req.user
+      await Wishlist.destroy({
         where: {
           UserId: user.id,
           ProductId: Number(ProductId),
         },
-      });
-      if (data === 1) {
-        return res.status(200).json({
-          message: "deleted",
-          id:ProductId
-        });
-      }
+      })
+      return res.status(200).json({
+        message: "deleted",
+        id: ProductId,
+      })
     } catch (error) {
-      throw error;
+      throw error.message
     }
   }
 }
-module.exports = wishlistController;
+module.exports = wishlistController

@@ -118,7 +118,7 @@ class carsController {
       if (data == 1) {
         return res.status(200).json({
           message: "Success",
-          data: req.body,
+          data: updateDataCars,
         })
       }
     } catch (error) {
@@ -190,7 +190,7 @@ class carsController {
         group: "year",
         order: [["year", "ASC"]],
       })
-      if (year) return res.status(200).json({category, brand, year})
+      return res.status(200).json({category, brand, year})
     } catch (err) {
       throw err
     }
