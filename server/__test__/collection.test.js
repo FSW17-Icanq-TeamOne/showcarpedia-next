@@ -199,17 +199,94 @@ describe("PUT v1/cars/update/:id", () => {
         if (err) return done(err)
         const {body, status} = res
         expect(status).toBe(200)
-        // expect(body).toStrictEqual({
-        //   title: newProduct.title,
-        //   brand: newProduct.brand,
-        //   year: newProduct.year,
-        //   kiloMeter: newProduct.kiloMeter,
-        //   grade: newProduct.grade,
-        //   category: newProduct.category,
-        //   description: newProduct.description,
-        //   photoProducts: newProduct.photoProducts,
-        //   videos: newProduct.videos,
-        // })
+        expect(body).toStrictEqual({
+          message: "Success",
+          data: {
+            title: newProduct.title,
+            brand: newProduct.brand,
+            year: newProduct.year,
+            kiloMeter: newProduct.kiloMeter,
+            grade: newProduct.grade,
+            category: newProduct.category,
+            description: newProduct.description,
+            photoProducts: newProduct.photoProducts,
+            videos: newProduct.videos,
+            delete: false,
+          },
+        })
+        done()
+      })
+  })
+})
+
+describe("DELETE v1/cars/delete/:id", () => {
+  test("TEST 7 DELETE CAR BY ID SUCCESS", (done) => {
+    request(app)
+      .delete(`/v1/cars/delete/${product[0].id}`)
+      .set("Cookie", [`access_token=${access_token}`])
+      .end((err, res) => {
+        if (err) return done(err)
+        const {body, status} = res
+        expect(status).toBe(200)
+        expect(body).toHaveProperty("message", "Success")
+        done()
+      })
+  })
+})
+
+describe("GET v1/cars/search", () => {
+  let query = {
+    mileages: 1000,
+    brand: "Porsche",
+    title: "Mobil Itu",
+    minYear: 2021,
+    grade: 5,
+    category: "Porsche",
+  }
+  let url = "/v1/cars/search?" + new URLSearchParams(query)
+  test("TEST 8 GET FILTERED CAR SUCCESS", (done) => {
+    request(app)
+      .get(url)
+      .set("Cookie", [`access_token=${access_token}`])
+      .end((err, res) => {
+        if (err) return done(err)
+        const {body, status} = res
+        expect(status).toBe(200)
+        expect(body).toEqual(expect.arrayContaining([]))
+        done()
+      })
+  })
+  test("TEST 9 GET FILTERED DATA FAILED (NO MATCHED QUERIES)", (done) => {
+    query.brand = "something"
+    url = "/v1/cars/search?" + new URLSearchParams(query)
+    request(app)
+      .get(url)
+      .set("Cookie", [`access_token=${access_token}`])
+      .end((err, res) => {
+        if (err) return done(err)
+        const {body, status} = res
+        expect(status).toBe(400)
+        expect(body).toMatch("data not found")
+        done()
+      })
+  })
+})
+
+describe("GET v1/cars/make", () => {
+  test("TEST 10 GET CAR MAKE", (done) => {
+    request(app)
+      .get("/v1/cars/make")
+      .set("Cookie", [`access_token=${access_token}`])
+      .end((err, res) => {
+        if (err) return done(err)
+        const {body, status} = res
+        expect(status).toBe(200)
+        expect(body).toEqual(
+          expect.objectContaining({
+            category: expect.arrayContaining([]),
+            brand: expect.arrayContaining([]),
+          })
+        )
         done()
       })
   })
