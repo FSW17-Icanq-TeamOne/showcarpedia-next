@@ -1,9 +1,9 @@
 const request = require("supertest");
-const app = require("../../../../showcarpedia-next/server/index");
-const { sequelize } = require("../../../../showcarpedia-next/server/models");
+const app = require("../index");
+const { sequelize } = require("../models");
 const { queryInterface } = sequelize;
-const { hashPassword } = require("../../../../showcarpedia-next/server/helpers/passwordHandler")
-const { generateToken, verifyToken } = require("../../../../showcarpedia-next/server/helpers/tokenHandler")
+const { hashPassword } = require("../helpers/passwordHandler")
+const { generateToken, verifyToken } = require("../helpers/tokenHandler")
 
 
 let userRole;
